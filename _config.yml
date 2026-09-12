@@ -1,10 +1,9 @@
 ### Site Settings ###
 title               : 👩🏻‍💻 Myzel's Page
 description         : >
-                      <strong>👩🏻‍💻 Backend-minded with a soft spot for cute things</strong><br/><br/>
-                      🧸 Python&nbsp;&nbsp;·&nbsp;&nbsp;SQL&nbsp;&nbsp;·&nbsp;&nbsp;APIs<br/>
-                      🗂️ structured over scattered<br/>
-                      🫧 probably tweaking something right now
+                      <h4>👩🏻‍💻 MJ Lee</h4><br/>
+                      Python&nbsp;&nbsp;·&nbsp;&nbsp;SQL&nbsp;&nbsp;·&nbsp;&nbsp;APIs<br/><br/>
+                      ✨ curious, organized, always tweaking
 baseurl             : ""            # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
 repository          : mjlee0914/mjlee0914.github.io   # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
 remote_theme        : yousinix/portfolYOU

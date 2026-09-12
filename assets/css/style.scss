@@ -1,0 +1,25 @@
+---
+---
+
+@import "portfolYOU";
+
+/* Home profile image */
+#container {
+  width: 480px;
+  max-width: 82vw;
+}
+
+/* Keep image cropped nicely */
+.circle-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Make intro text a little more minimal */
+#description {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-top: 1rem;
+}
