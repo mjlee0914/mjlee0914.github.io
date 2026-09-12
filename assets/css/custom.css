@@ -1,15 +1,9 @@
----
----
-
-@import "portfolYOU";
-
-/* Home section width */
+/* profile area */
 .row.justify-content-center > .col-lg-4 {
   flex: 0 0 520px;
   max-width: 520px;
 }
 
-/* Profile image */
 #container {
   width: 520px;
   max-width: 85vw;
@@ -24,7 +18,6 @@
   object-position: center;
 }
 
-/* Home description */
 p.text-muted {
   font-size: 0.9rem;
   line-height: 1.8;
