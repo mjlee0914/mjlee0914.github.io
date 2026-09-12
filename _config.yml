@@ -1,11 +1,10 @@
 ### Site Settings ###
-title               : 👩🏻‍💻 Myzel Page
-description         : >-
-                      👩🏻‍💻 Backend-minded with a soft spot for cute things
-                      🐍 Python · SQL · APIs
-                      🔎 always searching, comparing, figuring things out
-                      🗂️ structured over scattered
-                      ✨ probably tweaking something right now
+title               : 👩🏻‍💻 Myzel's Page
+description         : >
+                      <strong>👩🏻‍💻 Backend-minded with a soft spot for cute things</strong><br/><br/>
+                      🧸 Python&nbsp;&nbsp;·&nbsp;&nbsp;SQL&nbsp;&nbsp;·&nbsp;&nbsp;APIs<br/>
+                      🗂️ structured over scattered<br/>
+                      🫧 probably tweaking something right now
 baseurl             : ""            # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
 repository          : mjlee0914/mjlee0914.github.io   # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
 remote_theme        : yousinix/portfolYOU
