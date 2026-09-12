@@ -1,11 +1,11 @@
-- name: HTML5/CSS3
-  percentage: 90
-  color: danger
-
-- name: Go
-  percentage: 80
-  color:
-
 - name: Python
+  percentage: 50
+  color: primary
+
+- name: JavaScript
+  percentage: 60
+  color: success
+
+- name: PostgreSQL
   percentage: 70
-  color: secondary
+  color: danger
