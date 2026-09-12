@@ -7,6 +7,12 @@
   if (!context) return;
   canvas.id = "star-background";
   canvas.setAttribute("aria-hidden", "true");
+  canvas.style.position = "fixed";
+  canvas.style.inset = "0";
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
+  canvas.style.zIndex = "-1";
+  canvas.style.pointerEvents = "none";
   document.body.prepend(canvas);
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
