@@ -23,3 +23,31 @@ p.text-muted {
   line-height: 1.8;
   margin-top: 1.2rem;
 }
+
+/* Keep the decorative layer above the body background, behind all content. */
+body {
+  isolation: isolate;
+}
+
+#star-background {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  color: #7384a5;
+  /* Leave the central reading area quieter than the edges. */
+  -webkit-mask-image: radial-gradient(ellipse at center, #0003, #000 80%);
+  mask-image: radial-gradient(ellipse at center, #0003, #000 80%);
+}
+
+[data-theme="dark"] #star-background {
+  color: #b8c7e8;
+}
+
+@media print {
+  #star-background {
+    display: none;
+  }
+}
