@@ -1,0 +1,16 @@
+---
+layout: null
+permalink: /til-search.json
+---
+[
+  {% assign til_notes = site.til | sort: "date" | reverse %}
+  {% for note in til_notes %}
+    {
+      "title"    : "{{ note.title | escape }}",
+      "category" : "{{ note.category }}",
+      "tags"     : "{{ note.tags | join: ', ' }}",
+      "url"      : "{{ note.external_url | default: note.url | relative_url }}",
+      "date"     : "{{ note.date }}"
+    } {% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
