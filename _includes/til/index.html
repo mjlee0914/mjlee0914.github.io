@@ -13,8 +13,48 @@
     {% if til_notes.size > 0 %}
       <div class="card-group mt-2">
         {% for note in til_notes %}
-          {% assign post = note %}
-          {% include blog/post-card.html %}
+          {% assign note_title = note.title | default: note.basename %}
+          {% assign note_color = note.color | default: "primary" %}
+          {% assign note_style = note.style | default: "border" %}
+
+          {% assign card_style = note_color | prepend: "border border-" %}
+          {% assign text_style = "text-themed" %}
+          {% assign badge_style = note_color | prepend: "badge-" %}
+
+          {% if note_style == "fill" %}
+            {% assign card_style = note_color | prepend: "bg-" %}
+            {% if note_color != "light" %}
+              {% assign text_style = "text-white" %}
+              {% assign badge_style = "badge-light text-" | append: note_color %}
+            {% endif %}
+          {% endif %}
+
+          <div class="col-lg-6 my-3 wow animated fadeIn" data-wow-delay=".15s">
+            <a href="{{ note.url | relative_url }}" class="post card {{ card_style }}">
+              <div class="card-body {{ text_style }}">
+                <h3 class="card-title">{{ note_title }}</h3>
+                <p class="card-text">
+                  {% for tag in note.tags %}
+                    <span class="badge {{ badge_style }}">{{ tag }}</span>
+                  {% endfor %}
+                </p>
+                <p class="card-text">
+                  {% if note.description %}
+                    {{ note.description }}
+                  {% else %}
+                    {{ note.content | strip_html | truncatewords: 25, "<small><i>  read more...</i></small>" }}
+                  {% endif %}
+                </p>
+              </div>
+              <div class="card-footer {{ text_style }}">
+                {% if note.date %}
+                  {{ note.date | date_to_long_string }}
+                {% else %}
+                  TIL
+                {% endif %}
+              </div>
+            </a>
+          </div>
         {% endfor %}
       </div>
     {% else %}
