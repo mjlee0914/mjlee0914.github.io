@@ -27,12 +27,12 @@ p.text-muted {
 /* Navbar active/hover underline */
 .navbar .navbar-nav .nav-link.active,
 .navbar .navbar-nav .nav-link:hover {
-  border-bottom-color: #e2558f !important;
+  border-bottom-color: rgb(209, 246, 176) !important;
 }
 
 .navbar .navbar-nav .nav-link::after,
 .navbar .navbar-nav .nav-item.active::after {
-  background: #e2558f !important;
+  background: rgb(209, 246, 176) !important;
 }
 
 /* Keep the decorative layer above the body background, behind all content. */
