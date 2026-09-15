@@ -30,6 +30,11 @@ p.text-muted {
   border-bottom-color: #e2558f !important;
 }
 
+.navbar .navbar-nav .nav-link::after,
+.navbar .navbar-nav .nav-item.active::after {
+  background: #e2558f !important;
+}
+
 /* Keep the decorative layer above the body background, behind all content. */
 body {
   isolation: isolate;
