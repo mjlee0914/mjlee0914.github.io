@@ -175,6 +175,8 @@ h4 {
     font-size: 20px;
     line-height: 26px;
     color: #0c0e13;
+    margin-bottom: 30px;
+    margin-left: 30px;
 }
 
 .section1-container {
@@ -231,6 +233,8 @@ video {
     width: 100%;
     text-align: left; 
     position: relative;
+    margin-bottom: 20px;
+    margin-left: 50px;
 }
 
 .section2-container {
@@ -309,7 +313,6 @@ video {
     right: 20px;
     z-index: 23;
     cursor: pointer;
-    border: none;
     background: transparent;
     padding: 0;
 }
