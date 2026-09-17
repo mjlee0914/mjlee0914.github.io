@@ -95,6 +95,15 @@ h4 {
     color: #A4A7B0;
 }
 
+.header2 {
+    background: #fff;
+    position: sticky; 
+    top: 0;       
+    left: 0; 
+    width: 100%;       
+    z-index: 100; 
+}
+
 .header2 nav {
     display: flex;
     height: 60px;
