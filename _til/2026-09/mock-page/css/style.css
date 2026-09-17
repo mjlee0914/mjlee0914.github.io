@@ -10,6 +10,7 @@
 * {
     /*box-sizing: border-box;*/
     font-family: var(--primary-font-family);
+    word-break: keep-all !important;
 }
 
 html {
@@ -33,8 +34,13 @@ button {
     border: 0;
 }
 
+h3 {
+    margin-bottom: 5px;
+}
+
 h4 {
     font-weight: 400;
+    margin-top: 10px;
 }
 
 @keyframes fadeInUp {
@@ -110,7 +116,7 @@ h4 {
 .header2-container .left {
     display: flex;
     padding: 0 20px;
-    gap: 50px; /* 메뉴 간격 띄우기*/
+    gap: 40px; /* 메뉴 간격 띄우기*/
 }
 .header2-container .right {
     display: flex;
@@ -166,6 +172,7 @@ h4 {
     display: flex;
     align-items: stretch; /* 박스 크기 통일 */
 }
+
 
 video {
     width: 100%;
@@ -250,12 +257,10 @@ video {
 }
 
 .card h3 {
-    font-family: var(--primary-font-family);
     font-size: 20px;
 }
 
 .card span {
-    font-family: var(--primary-font-family);
     font-size: 14px;
     color:#858793;
     line-height: 21px;    
@@ -263,16 +268,9 @@ video {
 
 .card-text {
     display: flex;
-    flex-direction: column;
+    flex-flow: column;
     margin-left: 30px;
 }
-
-#minih3 {
-    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
-    font-weight: 600; 
-    font-size: 17px;
-}
-
 
 .more-button {
     background-color: #F5F6F7;
@@ -291,7 +289,6 @@ video {
 }
 
 .more-button span {
-    font-family: var(--primary-font-family) ;
     font-size: 16px;
     color: #0c0e13;
     font-weight: 700;
