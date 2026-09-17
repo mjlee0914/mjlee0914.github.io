@@ -54,7 +54,7 @@ h4 {
     }
 }
 
-/* header */
+/* 상단 로고, 메뉴 영역 S*/
 .header1 {
     display: flex;
     justify-content: space-evenly;
@@ -154,7 +154,9 @@ h4 {
     background-color: #FFF;
 }
 
-/* main */
+/* 상단 로고, 메뉴 영역 E*/
+
+/* 본문 영역 S*/
 .section1 {
     background: linear-gradient(
         to bottom,
@@ -306,6 +308,9 @@ video {
     color: #0c0e13;
     font-weight: 700;
 }
+
+/* 본문 영역 E*/
+
 /* question button */
 .question-button {
     position: fixed;
