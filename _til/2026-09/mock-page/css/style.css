@@ -55,14 +55,33 @@ h4 {
 }
 
 /* 상단 로고, 메뉴 영역 S*/
-.header1 {
+header {
+    transition: all 0.5s;
+    background: #FFF;
+}
+
+header.fixed {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    transform: translateY(-42px);
+}
+
+header.fixed .header-section1 {
+    background: #fff;
+}
+
+.header-section1 {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     padding: 5px 24px 0px;
+    background: #fff;
 }
 
-.header1-container {
+.header-section1-container {
     max-width: var(--primary-max-layout-width);
     min-width: var(--primary-min-layout-width);
     width: 100%;
@@ -71,12 +90,12 @@ h4 {
     justify-content: space-between;
 }
 
-.header1-container .right {
+.header-section1-container .right {
     display: flex;
     justify-content: flex-end;
 }
 
-.header1-container .right a {
+.header-section1-container .right a {
     padding-left: 20px;
 }
 
@@ -90,29 +109,31 @@ h4 {
     vertical-align: middle;
 }
 
-.frame1 p {
+.hsc-frame1 p {
     font-size: 13px;
     color: #A4A7B0;
 }
 
-.header2 {
+.header-section2 {
     background: #fff;
+    /* position stikcy 대신 header .fixed로 적용
     position: sticky; 
     top: 0;       
     left: 0; 
     width: 100%;       
     z-index: 100; 
+    */
 }
 
-.header2 nav {
+.header-section2 nav {
     display: flex;
-    height: 60px;
+    height: 50px;
     align-items: center;
     justify-content: space-evenly;
 }
 
 
-.header2-container {
+.header-section2-container {
     box-sizing: border-box;
     max-width: var(--primary-max-layout-width);
     min-width: var(--primary-min-layout-width);
@@ -122,12 +143,35 @@ h4 {
     justify-content: space-between ;
 }
 
-.header2-container .left {
+.header-section2-container .left {
     display: flex;
-    padding: 0 20px;
-    gap: 40px; /* 메뉴 간격 띄우기*/
+    gap: 10px; /* 메뉴 간격 띄우기*/
 }
-.header2-container .right {
+
+#total-lecture {
+    color: #FB062F;
+}
+
+.hsc-frame2 {
+    display: inline-block;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 6px 12px;
+}
+
+.hsc-frame2:hover {
+    background-color: rgb(246,249,250);
+}
+
+.hsc-frame2 h5 { 
+    font-weight: 700; 
+    font-size: var(--primary-font-size);   
+    color: #0C0E13;
+    line-height: 24px;
+    margin: 0;
+}
+
+.header-section2-container .right {
     display: flex;
     justify-content: flex-end;
 }
@@ -141,23 +185,10 @@ h4 {
     line-height: 20px;
     color: rgb(232, 52, 78);
 }
-
-#total-lecture {
-    color: #FB062F;
-}
-
-.frame2 h5 { 
-    font-family: var(--primary-font-family);
-    font-weight: 600; 
-    font-size: 16px;   
-    color: #0C0E13;
-    background-color: #FFF;
-}
-
 /* 상단 로고, 메뉴 영역 E*/
 
 /* 본문 영역 S*/
-.section1 {
+.main-section1 {
     background: linear-gradient(
         to bottom,
         #d1effa 0%,
@@ -171,17 +202,17 @@ h4 {
     padding: 48px 0;      
 }
 
-.section1-text {
+.main-section1-text {
     max-width: var(--primary-max-layout-width);
     width: 100%;
     font-size: 20px;
     line-height: 26px;
     color: #0c0e13;
     margin-bottom: 30px;
-    margin-left: 30px;
+    margin-left: 30px;                     
 }
 
-.section1-container {
+.main-section1-container {
     display: flex;
     align-items: stretch; /* 박스 크기 통일 */
 }
@@ -198,7 +229,7 @@ video {
 }
 
 
-.section1-container article {
+.main-section1-container article {
     width: 340px;
     flex-shrink: 0;
     border-radius: 8px;
@@ -214,13 +245,13 @@ video {
     box-sizing: 0;
 }
 
-.section1-container span {
+.main-section1-container span {
     font-size: 15px;
     line-height: 22px;
     color: #858793;
 }
 
-.section2 {
+.main-section2 {
     width: 100%;
     height: min-content;
     align-items: center; 
@@ -230,7 +261,7 @@ video {
     font-size: 17px;    
 }
 
-.section2-text {
+.main-section2-text {
     max-width: var(--primary-max-layout-width);
     width: 100%;
     text-align: left; 
@@ -239,7 +270,7 @@ video {
     margin-left: 50px;
 }
 
-.section2-container {
+.main-section2-container {
     max-width: var(--primary-max-layout-width);
     min-width: var(--primary-min-layout-width);
     display: grid;
@@ -259,7 +290,7 @@ video {
     align-items: center;
     width: 570px;
     height: min-content;
-    padding: 10px 70px;
+    padding: 15px 70px;
     display: flex;
     justify-self: center;
     animation: fadeInUp ease 1s;
