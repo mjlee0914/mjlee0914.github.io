@@ -45,20 +45,21 @@ p.text-muted {
   width: 100%;
 }
 
-/* Give every site card the same accent line as the navigation underline. */
-.card {
-  border-bottom: 2px solid var(--navbar-underline) !important;
+/* Match the hover underline on every linked card to the navigation accent. */
+.markdown-body a.card::after {
+  background: var(--navbar-underline) !important;
 }
 
 /* Separate each project title from its summary, like a compact project brief. */
 .project .project-divider {
   margin: 0.7rem 0;
   border: 0;
-  border-top: 1px solid rgba(95, 117, 184, 0.18);
+  height: 1px;
+  background-color: rgba(95, 117, 184, 0.12);
 }
 
 [data-theme="dark"] .project .project-divider {
-  border-top-color: rgba(174, 191, 241, 0.22);
+  background-color: rgba(174, 191, 241, 0.16);
 }
 
 /* Keep the decorative layer above the body background, behind all content. */
