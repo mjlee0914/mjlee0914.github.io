@@ -45,6 +45,17 @@ p.text-muted {
   width: 100%;
 }
 
+/* Separate each project title from its summary, like a compact project brief. */
+.project .project-divider {
+  margin: 0.7rem 0;
+  border: 0;
+  border-top: 1px solid rgba(95, 117, 184, 0.35);
+}
+
+[data-theme="dark"] .project .project-divider {
+  border-top-color: rgba(174, 191, 241, 0.4);
+}
+
 /* Keep the decorative layer above the body background, behind all content. */
 body {
   isolation: isolate;
