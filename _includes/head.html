@@ -39,7 +39,7 @@
 
   <!-- Your custom CSS -->
   <link rel="stylesheet"
-        href="{{ '/assets/css/custom.css' | relative_url }}">
+        href="{{ '/assets/css/custom.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 
   <!-- Decorative stars; deferred so the page content loads first -->
   <script defer src="{{ '/assets/js/star-background.js' | relative_url }}"></script>
