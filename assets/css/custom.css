@@ -45,9 +45,18 @@ p.text-muted {
   width: 100%;
 }
 
-/* Match the hover underline on every linked card to the navigation accent. */
+/* Use the same lift-and-shadow interaction for every linked card. */
+.markdown-body a.card {
+  transition: transform 400ms, box-shadow 400ms;
+}
+
 .markdown-body a.card::after {
-  background: var(--navbar-underline) !important;
+  content: none !important;
+}
+
+.markdown-body a.card:hover {
+  transform: translateY(-8px);
+  box-shadow: -2px 8px 40px -12px rgba(0, 0, 0, 0.24);
 }
 
 /* Separate each project title from its summary, like a compact project brief. */
