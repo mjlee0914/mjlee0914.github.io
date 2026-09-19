@@ -59,6 +59,23 @@ p.text-muted {
   box-shadow: -2px 8px 40px -12px rgba(0, 0, 0, 0.24);
 }
 
+/* Blog-card previews need a consistent, compact crop; post-body images stay full size. */
+a.post.card .card-body > p > img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  margin: 0 0 1rem;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0.4rem;
+}
+
+@media (max-width: 575.98px) {
+  a.post.card .card-body > p > img {
+    height: 180px;
+  }
+}
+
 /* Separate each project title from its summary, like a compact project brief. */
 .project .project-divider {
   margin: 0.7rem 0;
