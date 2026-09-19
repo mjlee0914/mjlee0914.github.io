@@ -5,7 +5,7 @@ style:
 color: 
 description: 
 ---
-![its giving highly maximal feelings](image-3.png)
+![its giving highly maximal feelings]({{ '/assets/images/blog/digital-maximalism/image-3.png' | relative_url }})
 
 When I started my journey to become an AI engineer, one of the first things I wanted to "fix" was my Github blog.
 
@@ -52,11 +52,11 @@ So I started wondering if there’s actually a name for this.
 i have a serious symtom that i cannot do anything without searching first.
 so guest what... i searched what digianl maximalism means. and here i found a reddit post which is quite funny.
 
-![alt text](image.png)
+![A Reddit post about digital maximalism]({{ '/assets/images/blog/digital-maximalism/image.png' | relative_url }})
 i kidna doing these all to my phone and laptop.
 its like you change everytihng that was set up to be default already and then you cant help but changing it.. cause it looks so boring and ugly!!!
 
-![alt text](image-1.png)
+![Examples of digital maximalist visual design]({{ '/assets/images/blog/digital-maximalism/image-1.png' | relative_url }})
 when you search "digital maximalism" on google, you can also feel it through the visuals... i really love these king of designs that clutter everything inside a box!!!!
 
 ## 2. What is the advantage to be digially maximal?
@@ -70,12 +70,12 @@ guess what i did to fill up this part?
 i searched on google what is the advantage of digital maximalism. and our kind godly Gemini gave me beatifully arranged table comparing digital minimulism and maximalism.
 
 
-![alt text](image-2.png)
+![A comparison of digital minimalism and maximalism]({{ '/assets/images/blog/digital-maximalism/image-2.png' | relative_url }})
 
 i hope that you get it for now.
 
 ## 3. what i actually wanna say is...
-![alt text](image-4.png)
+![A visual quote about creativity and maximalism]({{ '/assets/images/blog/digital-maximalism/image-4.png' | relative_url }})
 
 I want this world to be accepting that its not adhd..but giving *creativity* 
 
