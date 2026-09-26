@@ -45,12 +45,12 @@ SQL
 - transaction_test: check success / fail status
 - examples below:
 - schema:
-- ![alt text](image-11.png)
+- ![alt text](../image-11.png)
 - seed:
-- ![alt text](image-12.png)
-- ![alt text](image-13.png)
+- ![alt text](../image-12.png)
+- ![alt text](../image-13.png)
 - transaction_test:
-- ![alt text](image-14.png)
+- ![alt text](../image-14.png)
 ---
 # supabase
 - PostgreSQL을 클라우드에서 편하게 쓸 수 있도록 감싸 놓은 서비스 플랫폼
@@ -210,7 +210,7 @@ Keys
   
 ---
 환경변수
-![alt text](image-15.png)
+![alt text](../image-15.png)
 - 환경변수 -> .env 에 저장
 - .gitignore 파일 안 .env 저장
 ---
