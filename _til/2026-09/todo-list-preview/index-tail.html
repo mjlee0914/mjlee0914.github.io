@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <title>Receipt Your Day</title>
+    <style>
+        @font-face {
+            font-family: "Fake Receipt";
+            src: url("fonts/Fake%20Receipt.otf") format("opentype");
+            font-display: swap;
+        }
+    </style>
+</head>
+<body class="mx-2 mt-[100px] flex min-h-fit items-center justify-center bg-[#c5d4cb] font-['Fake_Receipt']">
+    <main>
+        <div class="box-content min-h-fit min-w-[300px] bg-[url('../assets/image.png')] bg-auto bg-center p-[50px]">
+            <h1 class="my-[0.67em] flex justify-center text-center text-[2em] font-bold">A Bill for a Day</h1>
+            <p class="my-4 flex justify-center">- - - - - - - - - - - - - - - - - -</p>
+
+            <section class="flex items-center justify-center">
+                <button type="button" class="m-auto flex cursor-pointer appearance-none items-center justify-center border-0 bg-transparent transition-colors duration-150 hover:text-[#758d7e]">All</button>
+                <button type="button" class="m-auto flex cursor-pointer appearance-none items-center justify-center border-0 bg-transparent transition-colors duration-150 hover:text-[#758d7e]">Active</button>
+                <button type="button" class="m-auto flex cursor-pointer appearance-none items-center justify-center border-0 bg-transparent transition-colors duration-150 hover:text-[#758d7e]">Done</button>
+            </section>
+
+            <p class="my-4 flex justify-center">- - - - - - - - - - - - - - - - - -</p>
+
+            <ol class="my-4 list-[decimal-leading-zero] pl-10">
+                <li>
+                    <div class="flex w-full items-center justify-between">
+                        <span>learn Python</span>
+                        <input type="checkbox" aria-label="Complete learn Python">
+                    </div>
+                </li>
+                <li>
+                    <div class="flex w-full items-center justify-between">
+                        <span>learn JavaScript</span>
+                        <input type="checkbox" aria-label="Complete learn JavaScript">
+                    </div>
+                </li>
+                <li>
+                    <div class="flex w-full items-center justify-between">
+                        <span>learn LLM</span>
+                        <input type="checkbox" aria-label="Complete learn LLM">
+                    </div>
+                </li>
+            </ol>
+
+            <p class="my-4 flex justify-center">- - - - - - - - - - - - - - - - - -</p>
+
+            <div class="flex items-center justify-center gap-2 pb-5">
+                <input type="text" size="32" name="todoText" placeholder="What to add today?">
+                <button type="button" aria-label="Add task" class="cursor-pointer appearance-none border-0 bg-transparent transition-colors duration-150 hover:text-[#758d7e]">+</button>
+            </div>
+
+            <div class="flex justify-between">
+                <span>0 task completed</span>
+                <button type="button" class="cursor-pointer appearance-none border-0 bg-transparent p-0 shadow-none transition-colors duration-150 hover:text-[#758d7e]">clear completed</button>
+            </div>
+
+            <p class="my-4 flex justify-center">- - - - - - - - - - - - - - - - - -</p>
+            <div class="flex justify-center">
+                <img src="assets/barcode.png" width="300" height="40" alt="Barcode" class="h-[30px] w-[300px] object-fill">
+            </div>
+            <p class="my-4 flex justify-center">- - - - - - - - - - - - - - - - - -</p>
+            <p class="my-4 flex justify-center">valid until today</p>
+        </div>
+    </main>
+</body>
+</html>
