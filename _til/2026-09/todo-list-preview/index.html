@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/png">
+    <script src="js/todo.js"></script>
+    <title>Receipt Your Day</title>
+</head>
+<body>
+    <main>
+        <div class="receipt">
+            <h1>A Bill for a Day</h1>
+            <p>- - - - - - - - - - - - - - - - - -</p>
+
+            <section class="tabs">
+                <button>All</button>
+                <button>Active</button>
+                <button>Done</button><br>
+            </section>
+            <p>- - - - - - - - - - - - - - - - - -</p>
+            <ol>
+                <div class="each-li">
+                    <li>learn Python</li>
+                    <input type="checkbox">
+                </div>
+                <div class="each-li">
+                    <li>learn JavaScript</li>
+                    <input type="checkbox">
+                </div>
+                <div class="each-li">
+                    <li>learn LLM</li>
+                    <input type="checkbox">
+                </div>
+            </ol>
+
+            <p>- - - - - - - - - - - - - - - - - -</p>
+
+            <div class="input-area">
+                <input type="text" size="35" name="todoText" placeholder="What to add today?"></input>
+                <button type="submit" onclick="">+</button>
+            </div>
+
+            <div class="manual-area">
+                    <span>0 task completed</span> <!---->
+                    <button class="appearance-none border-0 bg-transparent p-0 text-gray-600 shadow-none hover:text-red-500 cursor-pointer">clear completed</button>
+            </div>
+            <p>- - - - - - - - - - - - - - - - - -</p>
+            <div class="barcode">    
+                <img src="assets/barcode.png" width="300px" height="40px">
+            </div>
+            <p>- - - - - - - - - - - - - - - - - -</p>
+            <p>valid until today</p>
+                </div>
+    </main>
+</body>
+</html>

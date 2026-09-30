@@ -1,0 +1,89 @@
+@font-face {
+    font-family: "Fake Receipt";
+    src: url("../fonts/Fake Receipt.otf") format("opentype");
+}
+
+* {
+    font-family: "Fake Receipt";
+}
+
+p {
+    display: flex;
+    justify-content: center;
+}
+
+body {
+    display: block;
+    margin-top: 100px;
+    background-color: #c5d4cb;
+    min-height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ol {
+    list-style: decimal-leading-zero;
+}
+
+ol .each-li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.receipt {
+    min-width: 300px;
+    min-height: fit-content;
+    padding: 50px;
+    background-image: url("../assets/image.png");
+    background-position: center ;
+    background-size: auto;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tabs button {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    appearance: none;
+    border: 0;
+    background: transparent;
+}
+
+.input-area  {
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.manual-area {
+    display: flex;
+    justify-content: space-between;
+}
+
+.manual-area button {
+    cursor: pointer;
+    appearance: none;
+    border: 0;
+    background: transparent;
+}
+
+.barcode {
+    display: flex;
+    justify-content: center;
+}
