@@ -74,6 +74,7 @@ sample.textContent = userProvidedText;</code></pre>
 </section>
 </main>
 <script>
+const globalScriptThis = this;
 document.addEventListener("DOMContentLoaded", function () {
   const status = document.getElementById("dom-status");
   const domButton = document.getElementById("dom-button");
@@ -98,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("window-check").addEventListener("click", function () {
     document.getElementById("window-output").textContent =
-      "this === window: " + (this === window) +
+      "top-level this === window: " + (globalScriptThis === window) +
       "\nwindow === window.parent: " + (window === window.parent) +
       "\nwindow === window.top: " + (window === window.top) +
       "\nwindow.parent === window.top: " + (window.parent === window.top);
