@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DOM Ready, this, and Text Content</title>
+<style>
+:root { color-scheme: light; font: 16px/1.5 system-ui, sans-serif; color: #18212f; background: #f4f7fb; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 24px; }
+main { max-width: 920px; margin: auto; }
+h1 { font-size: 1.5rem; }
+h2 { margin-top: 0; font-size: 1.12rem; }
+.card { margin: 16px 0; padding: 18px; border: 1px solid #d9e1ee; border-radius: 14px; background: #fff; }
+button { margin: 4px 6px 4px 0; padding: 8px 12px; border: 0; border-radius: 8px; background: #2459c4; color: white; cursor: pointer; }
+pre, output, .result { display: block; overflow: auto; padding: 12px; border-radius: 9px; background: #101828; color: #eaf0ff; white-space: pre-wrap; }
+.note { color: #536176; }
+#sample { padding: 12px; border: 1px dashed #9aa9bf; }
+#hidden-sample { display: none; }
+</style>
+</head>
+<body>
+<main>
+<h1>DOM Ready, <code>this</code>, and Text Content</h1>
+<p class="note">This document is embedded in the TIL page. Use the buttons to run each small example.</p>
+
+<section class="card">
+<h2>Wait until the DOM exists</h2>
+<p id="dom-status">The script is waiting for DOMContentLoaded.</p>
+<button id="dom-button" type="button">Button found after parsing</button>
+<pre><code>document.addEventListener("DOMContentLoaded", function () {
+  const button = document.querySelector("#dom-button");
+  button.textContent = "Ready";
+});</code></pre>
+</section>
+
+<section class="card">
+<h2>Global <code>this</code> and iframe windows</h2>
+<button id="window-check" type="button">Show window relationships</button>
+<output id="window-output">Waiting for the button.</output>
+<pre><code>// Classic script at the top level:
+this === window
+
+// This document is in an iframe:
+window === window.parent
+window === window.top
+window.parent === window.top</code></pre>
+<p class="note">A classic script runs in this frame's window. An ES module has undefined for top-level this.</p>
+</section>
+
+<section class="card">
+<h2><code>innerHTML</code>, <code>innerText</code>, and <code>textContent</code></h2>
+<div id="sample"><strong>Visible</strong> text <span id="hidden-sample">plus hidden text</span></div>
+<button id="show-html" type="button">Read innerHTML</button>
+<button id="show-inner-text" type="button">Read innerText</button>
+<button id="show-text" type="button">Read textContent</button>
+<button id="set-html" type="button">Set safe HTML</button>
+<output id="content-output">Choose a button to inspect the result.</output>
+<pre><code>sample.innerHTML
+sample.innerText
+sample.textContent
+
+// Use textContent for untrusted plain text.
+sample.textContent = userProvidedText;</code></pre>
+</section>
+
+<section class="card">
+<h2>Event-listener <code>this</code></h2>
+<button id="listener-button" type="button">Run regular listener</button>
+<output id="listener-output">event.currentTarget and this will be shown here.</output>
+<pre><code>button.addEventListener("click", function (event) {
+  console.log(this === event.currentTarget);
+});</code></pre>
+</section>
+</main>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const status = document.getElementById("dom-status");
+  const domButton = document.getElementById("dom-button");
+  status.textContent = "DOMContentLoaded fired — the button exists.";
+  domButton.textContent = "Ready — button found";
+
+  const sample = document.getElementById("sample");
+  const contentOutput = document.getElementById("content-output");
+  document.getElementById("show-html").addEventListener("click", function () {
+    contentOutput.textContent = sample.innerHTML;
+  });
+  document.getElementById("show-inner-text").addEventListener("click", function () {
+    contentOutput.textContent = sample.innerText;
+  });
+  document.getElementById("show-text").addEventListener("click", function () {
+    contentOutput.textContent = sample.textContent;
+  });
+  document.getElementById("set-html").addEventListener("click", function () {
+    sample.innerHTML = "<strong>Trusted markup</strong> added as an element.";
+    contentOutput.textContent = "The sample's child nodes were replaced with trusted HTML.";
+  });
+
+  document.getElementById("window-check").addEventListener("click", function () {
+    document.getElementById("window-output").textContent =
+      "this === window: " + (this === window) +
+      "\nwindow === window.parent: " + (window === window.parent) +
+      "\nwindow === window.top: " + (window === window.top) +
+      "\nwindow.parent === window.top: " + (window.parent === window.top);
+  });
+
+  document.getElementById("listener-button").addEventListener("click", function (event) {
+    document.getElementById("listener-output").textContent =
+      "this === event.currentTarget: " + (this === event.currentTarget) +
+      "\nthis.id: " + this.id +
+      "\nevent.target.id: " + event.target.id;
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synchronous, Asynchronous, and the Event Loop</title>
+<style>
+:root { color-scheme: light; font: 16px/1.5 system-ui, sans-serif; color: #18212f; background: #f4f7fb; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 24px; }
+main { max-width: 920px; margin: auto; }
+h1 { font-size: 1.5rem; }
+.card { margin: 16px 0; padding: 18px; border: 1px solid #d9e1ee; border-radius: 14px; background: white; }
+button { margin: 4px 6px 4px 0; padding: 8px 12px; border: 0; border-radius: 8px; background: #2459c4; color: white; cursor: pointer; }
+pre, output { display: block; overflow: auto; padding: 12px; border-radius: 9px; background: #101828; color: #eaf0ff; white-space: pre-wrap; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.box { min-height: 92px; padding: 12px; border-radius: 10px; background: #edf1f6; }
+.queue { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.queue span { padding: 6px 10px; border-radius: 8px; background: #d9e9ff; }
+.note { color: #536176; }
+@media(max-width:640px) { .row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+<h1>Synchronous, Asynchronous, and the Event Loop</h1>
+<p class="note">JavaScript runs the current task to completion. Timer callbacks and Promise handlers wait in queues until the current stack is clear.</p>
+<div class="row">
+<section class="card box"><h2>Call stack</h2><p>Run the current synchronous JavaScript here, one step at a time.</p></section>
+<section class="card box"><h2>Browser APIs</h2><p>Timers and network operations wait outside the call stack. When ready, they queue work.</p></section>
+</div>
+<section class="card">
+<h2>See the order</h2>
+<button id="run-order" type="button">Run sync + Promise + timers</button>
+<button id="clear-order" type="button">Clear output</button>
+<div class="queue"><span>Promise.then() → microtask</span><span>setTimeout() → task</span></div>
+<output id="order-output">The log will show the order.</output>
+<pre><code>console.log("sync start");
+
+setTimeout(function () {
+  console.log("timer task");
+}, 0);
+
+Promise.resolve().then(function () {
+  console.log("Promise microtask");
+});
+
+console.log("sync end");</code></pre>
+</section>
+<section class="card">
+<h2>Schedule and cancel a timer</h2>
+<label for="delay">Delay in milliseconds (0–5000):</label>
+<input id="delay" type="number" min="0" max="5000" value="1200">
+<button id="schedule" type="button">Schedule callback</button>
+<button id="cancel" type="button">Cancel last callback</button>
+<output id="timer-output">No timer scheduled.</output>
+<pre><code>const timerId = setTimeout(callback, delay);
+clearTimeout(timerId);</code></pre>
+</section>
+</main>
+<script>
+const orderOutput = document.getElementById("order-output");
+function addLine(message) {
+  orderOutput.textContent += "\n" + message;
+}
+document.getElementById("run-order").addEventListener("click", function () {
+  orderOutput.textContent = "sync start";
+  setTimeout(function () { addLine("timer task"); }, 0);
+  Promise.resolve().then(function () { addLine("Promise microtask"); });
+  addLine("sync end");
+});
+document.getElementById("clear-order").addEventListener("click", function () {
+  orderOutput.textContent = "Output cleared.";
+});
+
+let timerId = null;
+const timerOutput = document.getElementById("timer-output");
+document.getElementById("schedule").addEventListener("click", function () {
+  if (timerId !== null) clearTimeout(timerId);
+  const delay = Math.max(0, Math.min(5000, Number(document.getElementById("delay").value) || 0));
+  timerOutput.textContent = "Callback scheduled. The delay is a minimum wait, not an exact start time.";
+  timerId = setTimeout(function () {
+    timerOutput.textContent = "Timer callback ran after about " + delay + " ms.";
+    timerId = null;
+  }, delay);
+});
+document.getElementById("cancel").addEventListener("click", function () {
+  if (timerId === null) {
+    timerOutput.textContent = "There is no pending timer to cancel.";
+    return;
+  }
+  clearTimeout(timerId);
+  timerId = null;
+  timerOutput.textContent = "Timer canceled.";
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Callbacks, Promises, Async/Await, and Fetch</title>
+<style>
+:root { color-scheme: light; font: 16px/1.5 system-ui, sans-serif; color: #18212f; background: #f4f7fb; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 24px; }
+main { max-width: 960px; margin: auto; }
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.12rem; }
+.card { margin: 16px 0; padding: 18px; border: 1px solid #d9e1ee; border-radius: 14px; background: white; }
+button { margin: 4px 6px 4px 0; padding: 8px 12px; border: 0; border-radius: 8px; background: #2459c4; color: white; cursor: pointer; }
+pre, output { display: block; overflow: auto; padding: 12px; border-radius: 9px; background: #101828; color: #eaf0ff; white-space: pre-wrap; }
+input { width: min(100%, 640px); padding: 8px; }
+.note { color: #536176; }
+</style>
+</head>
+<body>
+<main>
+<h1>Callbacks, Promises, Async/Await, and Fetch</h1>
+<p class="note">Each button runs the same three dependent jobs in order.</p>
+<section class="card">
+<h2>Callback nesting</h2>
+<button id="run-callback" type="button">Run callbacks</button>
+<pre><code>work("A", 500, function (a) {
+  work("B", 350, function (b) {
+    work("C", 250, function (c) {
+      console.log(a, b, c);
+    });
+  });
+});</code></pre>
+</section>
+<section class="card">
+<h2>Promise chain</h2>
+<button id="run-chain" type="button">Run Promise chain</button>
+<pre><code>work("A", 500)
+  .then(function (a) {
+    return work("B", 350).then(function (b) {
+      return [a, b];
+    });
+  })
+  .then(function (results) {
+    return work("C", 250).then(function (c) {
+      console.log(results[0], results[1], c);
+    });
+  })
+  .catch(function (error) {
+    console.error(error);
+  });</code></pre>
+</section>
+<section class="card">
+<h2>Async/await</h2>
+<button id="run-await" type="button">Run async/await</button>
+<pre><code>async function execute() {
+  const a = await work("A", 500);
+  const b = await work("B", 350);
+  const c = await work("C", 250);
+  console.log(a, b, c);
+}</code></pre>
+</section>
+<output id="job-output">Choose an example to start.</output>
+<section class="card">
+<h2>AJAX with Fetch</h2>
+<p>Fetch one JSON record and display the response as text.</p>
+<label for="fetch-url">Request URL</label><br>
+<input id="fetch-url" value="https://jsonplaceholder.typicode.com/posts/1">
+<p><button id="run-fetch" type="button">Fetch JSON</button> <button id="run-fetch-text" type="button">Fetch response text</button></p>
+<output id="fetch-output">The remote request has not run yet.</output>
+<pre><code>const response = await fetch(url);
+if (!response.ok) {
+  throw new Error("HTTP " + response.status);
+}
+const data = await response.json();
+output.textContent = JSON.stringify(data, null, 2);</code></pre>
+<pre><code>fetch(url)
+  .then(function (response) { return response.text(); })
+  .then(function (text) {
+    output.textContent = text;
+  });</code></pre>
+<p class="note">The demo needs a network connection. Fetch also requires checking response.ok because HTTP error statuses do not by themselves reject its Promise.</p>
+</section>
+</main>
+<script>
+function work(title, delay, callback) {
+  return new Promise(function (resolve) {
+    setTimeout(function () {
+      if (typeof callback === "function") callback(title);
+      resolve(title);
+    }, delay);
+  });
+}
+const output = document.getElementById("job-output");
+function start() { output.textContent = "Starting..."; }
+function show(value) { output.textContent += "\n" + value; }
+
+document.getElementById("run-callback").addEventListener("click", function () {
+  start();
+  work("A task", 500, function (a) {
+    show(a);
+    work("B task", 350, function (b) {
+      show(b);
+      work("C task", 250, function (c) {
+        show(c);
+        show("All callback steps finished.");
+      });
+    });
+  });
+});
+
+document.getElementById("run-chain").addEventListener("click", function () {
+  start();
+  work("A task", 500)
+    .then(function (a) {
+      show(a);
+      return work("B task", 350);
+    })
+    .then(function (b) {
+      show(b);
+      return work("C task", 250);
+    })
+    .then(function (c) {
+      show(c);
+      show("All Promise steps finished.");
+    })
+    .catch(function (error) {
+      show("Error: " + error.message);
+    });
+});
+
+document.getElementById("run-await").addEventListener("click", async function () {
+  start();
+  try {
+    const a = await work("A task", 500);
+    show(a);
+    const b = await work("B task", 350);
+    show(b);
+    const c = await work("C task", 250);
+    show(c);
+    show("All async/await steps finished.");
+  } catch (error) {
+    show("Error: " + error.message);
+  }
+});
+
+async function fetchData(asText) {
+  const result = document.getElementById("fetch-output");
+  const url = document.getElementById("fetch-url").value.trim();
+  result.textContent = "Loading...";
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    if (asText) {
+      result.textContent = await response.text();
+    } else {
+      const data = await response.json();
+      result.textContent = JSON.stringify(data, null, 2);
+    }
+  } catch (error) {
+    result.textContent = "Request failed: " + error.message;
+  }
+}
+document.getElementById("run-fetch").addEventListener("click", function () {
+  fetchData(false);
+});
+document.getElementById("run-fetch-text").addEventListener("click", function () {
+  fetchData(true);
+});
+</script>
+</body>
+</html>
