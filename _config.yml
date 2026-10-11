@@ -22,6 +22,8 @@ nav_exclude:                                            # The following paths ar
   - pages/index.md
   - pages/search.json
   - pages/til-search.json
+  - pages/react-habit-tracker.md
+  - pages/react-habit-tracker-demo.html
   - documentation/partials/**                           # For Documentation Only
 
 
