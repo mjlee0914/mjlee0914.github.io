@@ -1,0 +1,170 @@
+---
+layout: null
+permalink: /coding/react-habit-tracker-demo/
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f7fb" />
+    <title>Habit Tracker Practice Preview</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #f7f7fb; color: #202033; font: 15px/1.5 system-ui, sans-serif; }
+      button, input { font: inherit; }
+      button { border: 0; border-radius: 9px; padding: 9px 13px; cursor: pointer; transition: background .15s ease, transform .15s ease; }
+      button:active { transform: translateY(1px); }
+      button:disabled { cursor: not-allowed; opacity: .45; }
+      #root { max-width: 900px; margin: 0 auto; padding: 24px; }
+      header { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 10px 0 22px; }
+      h1 { margin: 0; font-size: clamp(22px, 4vw, 30px); line-height: 1.2; }
+      .muted { color: #6d6d80; font-size: 13px; }
+      .week-controls { display: grid; gap: 8px; justify-items: center; }
+      .button-row { display: flex; gap: 8px; }
+      .button-primary { background: #7047e8; color: white; }
+      .button-primary:hover:not(:disabled) { background: #5c35d1; }
+      .button-secondary { background: #e8e7ef; color: #58586b; }
+      .button-secondary:hover:not(:disabled) { background: #dddae8; }
+      .button-delete { background: transparent; color: #a63245; }
+      .button-delete:hover { background: #f9e6e9; }
+      form { display: flex; gap: 10px; margin-bottom: 18px; }
+      input { min-width: 0; flex: 1; border: 1px solid #dcdae6; border-radius: 9px; padding: 10px 13px; background: white; outline: none; }
+      input:focus { border-color: #7047e8; box-shadow: 0 0 0 3px #7047e82a; }
+      .empty { padding: 38px 16px; text-align: center; color: #77778b; }
+      .habit { margin: 11px 0; padding: 15px; border: 1px solid #ebe9f2; border-radius: 15px; background: white; box-shadow: 0 3px 12px #2724400a; }
+      .habit-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; }
+      .habit-name { font-weight: 650; overflow-wrap: anywhere; }
+      .streak { margin-left: 8px; color: #a65b00; font-size: 13px; }
+      .days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 7px; }
+      .day { display: grid; gap: 2px; padding: 8px 3px; font-size: 12px; }
+      .day strong { font-size: 11px; }
+      .day.completed { background: #7047e8; color: white; }
+      footer { padding-top: 12px; text-align: center; color: #858497; font-size: 12px; }
+      @media (max-width: 560px) {
+        #root { padding: 16px 12px; }
+        header { align-items: flex-start; flex-direction: column; }
+        .week-controls { justify-items: start; }
+        .days { gap: 4px; }
+        .day { padding: 7px 1px; }
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19.2.8",
+          "react-dom/client": "https://esm.sh/react-dom@19.2.8/client?external=react"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import React, { useEffect, useState } from "react";
+      import { createRoot } from "react-dom/client";
+
+      const h = React.createElement;
+      const STORAGE_KEY = "react-habit-tracker-study-preview";
+
+      function startOfWeek(date) {
+        const start = new Date(date);
+        start.setHours(0, 0, 0, 0);
+        start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+        return start;
+      }
+
+      function sameDay(a, b) {
+        return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+      }
+
+      function readHabits() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+          return saved.map((habit) => ({ ...habit, completions: habit.completions.map((value) => new Date(value)) }));
+        } catch {
+          return [];
+        }
+      }
+
+      function App() {
+        const [weekOffset, setWeekOffset] = useState(0);
+        const [name, setName] = useState("");
+        const [habits, setHabits] = useState(readHabits);
+        const today = new Date();
+        const weekStart = startOfWeek(new Date(today.getFullYear(), today.getMonth(), today.getDate() + weekOffset * 7));
+        const dates = Array.from({ length: 7 }, (_, index) => {
+          const date = new Date(weekStart);
+          date.setDate(date.getDate() + index);
+          return date;
+        });
+        const doneToday = habits.filter((habit) => habit.completions.some((date) => sameDay(date, today))).length;
+        const weekLabel = `${dates[0].toLocaleDateString(undefined, { month: "short", day: "numeric" })} – ${dates[6].toLocaleDateString(undefined, { month: "short", day: "numeric" })}`;
+
+        useEffect(() => {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(habits));
+        }, [habits]);
+
+        function addHabit(event) {
+          event.preventDefault();
+          const cleanName = name.trim();
+          if (!cleanName) return;
+          const id = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
+          setHabits((current) => [...current, { id, name: cleanName, completions: [] }]);
+          setName("");
+        }
+
+        function toggleHabit(id, date) {
+          setHabits((current) => current.map((habit) => {
+            if (habit.id !== id) return habit;
+            const alreadyDone = habit.completions.some((value) => sameDay(value, date));
+            const completions = alreadyDone
+              ? habit.completions.filter((value) => !sameDay(value, date))
+              : [...habit.completions, date];
+            return { ...habit, completions };
+          }));
+        }
+
+        function getStreak(completions) {
+          let count = 0;
+          const date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          while (completions.some((value) => sameDay(value, date))) {
+            count += 1;
+            date.setDate(date.getDate() - 1);
+          }
+          return count;
+        }
+
+        return h("main", null,
+          h("header", null,
+            h("div", null,
+              h("h1", null, "Habit Tracker (React Practice Page)"),
+              h("div", { className: "muted" }, `${doneToday} / ${habits.length} done today`)),
+            h("div", { className: "week-controls" },
+              h("span", { className: "muted" }, weekLabel),
+              h("div", { className: "button-row" },
+                h("button", { className: "button-secondary", onClick: () => setWeekOffset((value) => value - 1) }, "Prev"),
+                h("button", { className: "button-secondary", disabled: dates.some((date) => sameDay(date, today)), onClick: () => setWeekOffset((value) => value + 1) }, "Next")))),
+          h("form", { onSubmit: addHabit },
+            h("input", { value: name, onChange: (event) => setName(event.target.value), placeholder: "New habit...", "aria-label": "New habit" }),
+            h("button", { className: "button-primary", disabled: !name.trim() }, "Add Habit")),
+          habits.length === 0
+            ? h("p", { className: "empty" }, "No habits yet. Add one above to get started!")
+            : habits.map((habit) => h("article", { className: "habit", key: habit.id },
+                h("div", { className: "habit-head" },
+                  h("div", null, h("span", { className: "habit-name" }, habit.name),
+                    getStreak(habit.completions) > 0 ? h("span", { className: "streak" }, `🔥 ${getStreak(habit.completions)}`) : null),
+                  h("button", { className: "button-delete", onClick: () => setHabits((current) => current.filter((item) => item.id !== habit.id)) }, "Delete")),
+                h("div", { className: "days" }, dates.map((date) => {
+                  const completed = habit.completions.some((value) => sameDay(value, date));
+                  return h("button", { key: date.toISOString(), className: `day ${completed ? "completed" : "button-secondary"}`, disabled: date > new Date(today.getFullYear(), today.getMonth(), today.getDate()), onClick: () => toggleHabit(habit.id, date) },
+                    h("strong", null, date.toLocaleDateString(undefined, { weekday: "short" })),
+                    h("span", null, date.getDate()));
+                })))),
+          h("footer", null, "Preview data is saved in this browser only."));
+      }
+
+      createRoot(document.getElementById("root")).render(h(App));
+    </script>
+  </body>
+</html>
