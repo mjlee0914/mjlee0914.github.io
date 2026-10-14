@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>DN Mall — FE-project-teamD Home Snapshot · 2026-10-14</title>
+    <link rel="stylesheet" href="./home-page.css" />
+  </head>
+  <body>
+    <header class="utility-bar">
+      <div class="utility-inner">
+        <a class="icon-link menu-icon" href="#products" aria-label="전체 상품"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg></a>
+        <a class="brand-logo" href="#top">DN Mall</a>
+        <div class="utility-actions" aria-label="쇼핑 도구">
+          <a class="icon-link" href="#products" aria-label="상품 검색"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m16 16 4 4" /></svg></a>
+          <a class="icon-link" href="#products" aria-label="장바구니"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L20 8H6" /><circle cx="10" cy="20" r="1" /><circle cx="18" cy="20" r="1" /></svg></a>
+          <a class="icon-link" href="#footer" aria-label="로그인"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2" /><path d="M5 20c.5-3.2 3.2-5 7-5s6.5 1.8 7 5" /></svg></a>
+        </div>
+      </div>
+    </header>
+
+    <nav class="category-nav" aria-label="상품 카테고리">
+      <a href="#top">Collection</a>
+      <a href="#products">New Arrivals</a>
+      <a href="#products">Best-Sellers</a>
+      <a href="#products">Outerwear</a>
+      <a href="#products">Tops &amp; Sweaters</a>
+      <a href="#products">Pants &amp; Jeans</a>
+      <a href="#products">Shoes &amp; Bags</a>
+      <a class="sale" href="#offers">Sale</a>
+    </nav>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <img class="hero-image" src="./assets/hero-mainbanner.jpg" alt="가을 시즌 스트릿 패션 컬렉션" />
+        <div class="hero-shade"></div>
+        <div class="hero-copy">
+          <h1 id="hero-title">2026 DN F/W COLLECTION</h1>
+          <p>선선한 바람과 함께 시작되는 새로운 시즌,<br />편안한 착용감의 데일리 아이템을 특별 혜택으로 만나보세요.</p>
+          <a class="shop-button" href="#products">SHOP NOW</a>
+        </div>
+      </section>
+
+      <section id="products" class="catalog-section">
+        <div class="section-heading">
+          <h2>요즘 가장 많이 찾는 아이템</h2>
+          <p>지금 사랑받는 베스트 상품을 한눈에 확인해보세요.</p>
+        </div>
+        <div class="product-grid">
+          <article class="product-card">
+            <img src="./assets/product-anorak.jpg" alt="검정 아노락 재킷" />
+            <h3>아노락 재킷 <span>HOT</span></h3>
+            <p class="price">79,000원</p>
+          </article>
+          <article class="product-card">
+            <img src="./assets/product-hoodie.jpg" alt="피치 오렌지 밑단 스트링 후드티" />
+            <h3>밑단 스트링 후드티 <span>HOT</span></h3>
+            <p class="price">59,000원</p>
+          </article>
+          <article class="product-card">
+            <img src="./assets/product-joggers.jpg" alt="파스텔 조거 팬츠" />
+            <h3>파스텔 조거 팬츠 <span>HOT</span></h3>
+            <p class="price">42,000원</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="offers" class="offers-section">
+        <div class="section-heading">
+          <h2>이달의 혜택</h2>
+          <p>쿠폰부터 시즌 세일까지, 진행 중인 혜택을 확인해보세요.</p>
+        </div>
+        <div class="offer-grid">
+          <article class="offer-card">
+            <img src="./assets/event-clothes.jpg" alt="옷장에서 가을옷을 고르는 모습" />
+            <a href="#offers">쿠폰 혜택 보기</a>
+          </article>
+          <article class="offer-card">
+            <img src="./assets/event-blackfriday.jpg" alt="블랙 프라이데이 세일 안내" />
+            <a href="#offers">쿠폰 혜택 보기</a>
+          </article>
+          <article class="offer-card">
+            <img src="./assets/event-sneakers.jpg" alt="스니커즈 스타일링" />
+            <a href="#offers">쿠폰 혜택 보기</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer" class="site-footer">
+      <div class="footer-columns">
+        <section>
+          <h2>회사 소개</h2>
+          <p>상호명: (주) 디엠몰 | 대표: 정현구</p>
+          <p>주소 : 서울 구로구 구로동 170-10 대륭포스트타워 7차 15층</p>
+          <p>통신판매업신고 : 2026-KANT-1012 | 사업자등록번호 : 000-00-0000</p>
+          <p>개인정보관리책임자 : 이명지 | 제휴/협력문의 : ninja@dnmall.com</p>
+        </section>
+        <section>
+          <h2>고객지원</h2>
+          <p>운영시간: 평일 09:00 - 18:00 (주말, 공휴일 휴무)</p>
+          <p>이메일: inquries@dnmall.com</p>
+          <p>콜센터: 1688-0000</p>
+        </section>
+        <section>
+          <h2>SHOP MENU</h2>
+          <ul>
+            <li>BOARD</li>
+            <li>NOTICE</li>
+            <li>EVENT</li>
+            <li>REVIEW</li>
+            <li>SUPPORT</li>
+          </ul>
+        </section>
+      </div>
+      <div class="copyright">
+        <span>© 2026 Team DN. All rights reserved.</span>
+        <span>Team Disco Ninja FrontEnd Project</span>
+      </div>
+    </footer>
+  </body>
+</html>
