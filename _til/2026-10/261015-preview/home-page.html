@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>DN Mall — FE-project-teamD Home Snapshot · 2026-10-15</title>
+    <link rel="stylesheet" href="./home-page.css" />
+  </head>
+  <body>
+    <header class="utility-bar">
+      <div class="utility-inner">
+        <a class="menu-icon" href="#categories" aria-label="전체 상품">☰</a>
+        <a class="brand-logo" href="#top">DN Mall</a>
+        <div class="utility-actions" aria-label="쇼핑 도구"><a href="#products" aria-label="상품 검색">⌕</a><a href="#products" aria-label="장바구니">♧</a><a href="#footer" aria-label="로그인">♙</a></div>
+      </div>
+    </header>
+
+    <nav id="categories" class="category-nav" aria-label="상품 카테고리">
+      <a href="#top">Collection</a><a href="#products">Best</a><a href="#products">Tops &amp; Sweaters</a><a href="#products">Pants &amp; Jeans</a><a href="#products">Dress &amp; Skirt</a><a href="#products">Shoes &amp; Bags</a><a class="sale" href="#events">Sale</a>
+    </nav>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <img class="hero-image" src="./assets/hero-mainbanner.jpg" alt="DN Mall 가을 겨울 스트릿 패션 컬렉션" />
+        <div class="hero-shade"></div>
+        <div class="hero-copy">
+          <p class="eyebrow">NEW SEASON · 2026</p>
+          <h1 id="hero-title">2026 DN F/W COLLECTION</h1>
+          <p>선선한 바람과 함께 시작되는 새로운 시즌,<br />편안한 데일리 아이템을 특별 혜택으로 만나보세요.</p>
+          <a class="shop-button" href="#products">SHOP NOW</a>
+        </div>
+      </section>
+
+      <section id="products" class="catalog-section">
+        <div class="section-heading"><div><span class="section-kicker">MOST LOVED</span><h2>요즘 가장 많이 찾는 아이템</h2><p>조회수가 높은 베스트 상품을 한눈에 확인해보세요.</p></div><a href="#products" class="view-all">전체 상품 보기 <span>↗</span></a></div>
+        <div class="product-grid">
+          <article class="product-card"><a class="product-image" href="#products"><img src="./assets/product-joggers.jpg" alt="파스텔 조거 팬츠" /><span class="rank">01 · BEST</span></a><div class="product-copy"><h3>파스텔 조거 팬츠 <span>HOT</span></h3><p class="price">42,000원</p><p class="product-meta">Soft colors, easy everyday fit</p></div></article>
+          <article class="product-card"><a class="product-image" href="#products"><img src="./assets/product-hoodie.jpg" alt="밑단 스트링 후드티" /><span class="rank">02 · BEST</span></a><div class="product-copy"><h3>밑단 스트링 후드티 <span>HOT</span></h3><p class="price">59,000원</p><p class="product-meta">Adjustable detail · Peach orange</p></div></article>
+          <article class="product-card"><a class="product-image" href="#products"><img src="./assets/product-socks.svg" alt="골지 크루 삭스 3팩" /><span class="rank">03 · BEST</span></a><div class="product-copy"><h3>골지 크루 삭스 3팩 <span>HOT</span></h3><p class="price">12,000원</p><p class="product-meta">A three-pack of everyday crew socks</p></div></article>
+        </div>
+      </section>
+
+      <section id="events" class="events-section" aria-labelledby="events-title">
+        <div class="section-heading"><div><span class="section-kicker">OFFERS &amp; STORIES</span><h2 id="events-title">진행 중 이벤트</h2><p>새로운 시즌을 위한 혜택과 소식을 확인해보세요.</p></div><a href="#events" class="view-all">전체 이벤트 <span>↗</span></a></div>
+        <div class="carousel-shell" role="region" aria-label="이벤트 배너">
+          <button class="carousel-arrow previous" type="button" aria-label="이전 이벤트">‹</button>
+          <div class="carousel-window"><div class="carousel-track">
+            <article class="event-card"><img src="./assets/event-newacc.jpg" alt="첫 구매 할인 이벤트" /><div class="event-shade"></div><div class="event-copy"><span>WELCOME OFFER</span><h3>첫 구매 30% 할인 이벤트</h3><p>첫 구매 고객님께 30% 할인 쿠폰을 드립니다.</p></div></article>
+            <article class="event-card"><img src="./assets/event-blackfriday.jpg" alt="블랙프라이데이 이벤트" /><div class="event-shade"></div><div class="event-copy"><span>LIMITED OFFER</span><h3>블랙프라이데이 이벤트</h3><p>특별 할인 상품을 만나보세요.</p></div></article>
+            <article class="event-card"><img src="./assets/event-sneakers.jpg" alt="스니커즈 할인 이벤트" /><div class="event-shade"></div><div class="event-copy"><span>FALL STYLE</span><h3>스니커즈 20% OFF</h3><p>가을 데일리룩에 어울리는 스니커즈.</p></div></article>
+            <article class="event-card"><img src="./assets/event-fall.jpg" alt="가을 아우터 기획전" /><div class="event-shade"></div><div class="event-copy"><span>NEW SEASON</span><h3>가을 아우터 기획전</h3><p>쌀쌀한 날씨를 위한 특별한 가격.</p></div></article>
+            <article class="event-card"><img src="./assets/event-chuseok.jpg" alt="추석 특가전" /><div class="event-shade"></div><div class="event-copy"><span>PAST EVENT</span><h3>추석 특가전</h3><p>추석 맞이 특가전 아카이브.</p></div></article>
+          </div></div>
+          <button class="carousel-arrow next" type="button" aria-label="다음 이벤트">›</button>
+        </div>
+        <p class="carousel-note"><span class="dot"></span> Snapshot of the event posts in main mock data · use arrows to browse</p>
+      </section>
+    </main>
+
+    <footer id="footer" class="site-footer">
+      <div class="footer-columns">
+        <section><h2>회사 소개</h2><p>상호명: (주) 디엠몰 | 대표: 정현구</p><p>주소: 서울 구로구 구로동 170-10 대륭포스트타워 7차 15층</p><p>통신판매업신고: 2026-KANT-1012 | 사업자등록번호: 000-00-0000</p><p>개인정보관리책임자: 이명지 | 제휴/협력문의: ninja@dnmall.com</p></section>
+        <section><h2>고객지원</h2><p>운영시간: 평일 09:00 - 18:00 (주말, 공휴일 휴무)</p><p>이메일: inquries@dnmall.com</p><p>콜센터: 1688-0000</p></section>
+        <section><h2>SHOP MENU</h2><ul><li>BOARD</li><li>NOTICE</li><li>EVENT</li><li>REVIEW</li><li>SUPPORT</li></ul></section>
+      </div>
+      <div class="copyright"><span>© 2026 Team DN. All rights reserved.</span><span>Team Disco Ninja FrontEnd Project</span></div>
+    </footer>
+
+    <script>
+      const windowEl = document.querySelector('.carousel-window');
+      const track = document.querySelector('.carousel-track');
+      const cards = [...document.querySelectorAll('.event-card')];
+      const shell = document.querySelector('.carousel-shell');
+      let index = 0;
+      let timer;
+
+      function visibleSlides() {
+        return window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
+      }
+
+      function updateCarousel() {
+        const gap = parseFloat(getComputedStyle(track).gap) || 0;
+        const step = cards[0].getBoundingClientRect().width + gap;
+        track.style.transform = `translateX(${-index * step}px)`;
+      }
+
+      function move(direction) {
+        const lastStart = Math.max(0, cards.length - visibleSlides());
+        index = (index + direction + lastStart + 1) % (lastStart + 1);
+        updateCarousel();
+      }
+
+      function startAutoplay() {
+        clearInterval(timer);
+        timer = setInterval(() => move(1), 2500);
+      }
+
+      document.querySelector('.previous').addEventListener('click', () => move(-1));
+      document.querySelector('.next').addEventListener('click', () => move(1));
+      shell.addEventListener('mouseenter', () => clearInterval(timer));
+      shell.addEventListener('mouseleave', startAutoplay);
+      window.addEventListener('resize', () => {
+        index = Math.min(index, Math.max(0, cards.length - visibleSlides()));
+        updateCarousel();
+      });
+      windowEl.addEventListener('focusin', () => clearInterval(timer));
+      windowEl.addEventListener('focusout', startAutoplay);
+      updateCarousel();
+      startAutoplay();
+    </script>
+  </body>
+</html>
