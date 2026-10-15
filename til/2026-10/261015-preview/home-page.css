@@ -105,7 +105,6 @@ button { font: inherit; }
   .section-heading h2 { font-size: 18px; }
   .view-all { font-size: 9px; }
   .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .product-card:last-child { display: none; }
   .product-image { aspect-ratio: 1 / 1.08; }
   .rank { top: 9px; left: 9px; font-size: 8px; }
   .product-copy { padding-top: 11px; }
