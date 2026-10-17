@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>일-월 Todo 체크리스트</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font: 16px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #18212f;
+        background: #f4f7fb;
+      }
+
+      * { box-sizing: border-box; }
+
+      body { margin: 0; padding: 18px; }
+
+      main {
+        width: min(100%, 780px);
+        margin: 0 auto;
+        padding: 22px;
+        border: 1px solid #d9e1ee;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 8px 28px rgb(24 33 47 / 7%);
+      }
+
+      header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      h1 { margin: 0 0 4px; font-size: clamp(1.25rem, 4vw, 1.65rem); }
+      .note, .progress { margin: 0; color: #536176; }
+      .progress { margin-top: 8px; font-size: 0.9rem; font-weight: 650; }
+
+      button {
+        flex: 0 0 auto;
+        padding: 8px 11px;
+        border: 1px solid #cbd5e1;
+        border-radius: 9px;
+        background: #fff;
+        color: #34445c;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      button:hover { background: #f2f5fa; }
+
+      ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+
+      label {
+        display: flex;
+        align-items: flex-start;
+        gap: 11px;
+        padding: 11px 12px;
+        border: 1px solid #e3e9f1;
+        border-radius: 10px;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      label:hover { border-color: #aebff1; background: #f9faff; }
+
+      input {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+        margin: 2px 0 0;
+        accent-color: #536fbe;
+      }
+
+      input:checked + span { color: #778398; text-decoration: line-through; }
+
+      @media (max-width: 560px) {
+        body { padding: 10px; }
+        main { padding: 16px; }
+        header { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>일-월 Todo</h1>
+          <p class="note">체크 상태는 이 브라우저에 저장돼요. 다른 기기와는 공유되지 않아요.</p>
+          <p id="progress" class="progress" role="status" aria-live="polite">0 / 12 완료</p>
+        </div>
+        <button id="reset" type="button">전체 체크 해제</button>
+      </header>
+
+      <ul>
+        <li><label><input type="checkbox" data-todo-id="popular-products" /><span>인기상품 - viewCount, 구매횟수 높은순 .sort()로 내림차순 top10개만 적용하기</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="cart-layout" /><span>Cart layout</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="checkout-layout" /><span>Checkout layout</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="search-page" /><span>Search page (hardcoding )</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="header-hover" /><span>Header hover color</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="shop-now-category" /><span>Main shop now button -&gt; category add (main page banner 에 있는 상품들만)</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="product-best" /><span>Product best -&gt; top 10</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="responsive" /><span>반응형 구현</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="all-menu-modal" /><span>헤더 전체메뉴 아이콘 - modal</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="nav-all" /><span>헤더 내비게이션 메뉴 ALL 추가</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="nav-dropdown" /><span>헤더 내비게이션 dropdown</span></label></li>
+        <li><label><input type="checkbox" data-todo-id="nav-hover" /><span>헤더 내비게이션 hover -&gt; color 변경(메누별), 육걸 사이트 참고</span></label></li>
+      </ul>
+    </main>
+
+    <script>
+      const storageKey = "mjlee0914-til-261017-todo-v1";
+      const checkboxes = [...document.querySelectorAll("input[data-todo-id]")];
+      const progress = document.querySelector("#progress");
+
+      function readSavedState() {
+        try {
+          const value = JSON.parse(localStorage.getItem(storageKey) || "{}");
+          return value && typeof value === "object" ? value : {};
+        } catch {
+          return {};
+        }
+      }
+
+      function saveState() {
+        const state = Object.fromEntries(
+          checkboxes.map((checkbox) => [checkbox.dataset.todoId, checkbox.checked]),
+        );
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(state));
+        } catch {
+          // Checkboxes remain usable when browser storage is unavailable.
+        }
+      }
+
+      function updateProgress() {
+        const complete = checkboxes.filter((checkbox) => checkbox.checked).length;
+        progress.textContent = `${complete} / ${checkboxes.length} 완료`;
+      }
+
+      const savedState = readSavedState();
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = savedState[checkbox.dataset.todoId] === true;
+        checkbox.addEventListener("change", () => {
+          saveState();
+          updateProgress();
+        });
+      });
+
+      document.querySelector("#reset").addEventListener("click", () => {
+        checkboxes.forEach((checkbox) => { checkbox.checked = false; });
+        try {
+          localStorage.removeItem(storageKey);
+        } catch {
+          // Clearing checks still works when browser storage is unavailable.
+        }
+        updateProgress();
+      });
+
+      updateProgress();
+    </script>
+  </body>
+</html>
