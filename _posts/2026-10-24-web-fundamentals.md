@@ -81,22 +81,6 @@ Ajax → 서버와 데이터를 어떻게 주고받는가
 CSR  → 화면을 어디에서 만드는가
 ```
 
-## 프로젝트 발표 피드백
-
-발표 첫 부분에서 **어떤 문제를 해결했는지** 보여주면 관심을 끌기 좋다. 설명은 **문제 → 해결 방법 → 달라진 결과** 순서로 구성한다.
-
-```text
-문제
-→ 댓글 작성 때마다 전체 페이지가 새로고침됨.
-
-해결
-→ Ajax로 댓글을 전송하고 목록만 갱신.
-
-결과
-→ 페이지 전체를 다시 불러오지 않고 댓글 확인.
-```
-
-- [프로젝트 발표 PPT](https://docs.google.com/presentation/d/1W6LVvYJaRfGo2mhWDVaqMYNADKjFyb9HRm3XAZGlNZw/edit?usp=drivesdk)
 - [웹기초 전체 TIL 보기](/til/2026-10/261024_TIL/)
 
 이번 정리를 통해 브라우저에서 보이는 화면 뒤에서는 URL, Method, Header, Body로 요청을 만들고, 서버가 Status Code, Header, Body로 응답한다는 흐름을 연결해서 이해할 수 있었다.
