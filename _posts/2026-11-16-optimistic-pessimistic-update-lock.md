@@ -1,6 +1,6 @@
 ---
 title: "낙관적·비관적 업데이트와 락: 수강신청 시스템으로 이해하기"
-date: 2026-11-16
+date: 2026-11-16 00:00:00 +0900
 tags: [Database, Concurrency, Transaction, SQL, Backend]
 style: border
 color: primary
