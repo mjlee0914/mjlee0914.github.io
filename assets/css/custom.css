@@ -35,6 +35,11 @@ p.text-muted {
   --tag-color: #687185;
   --tag-color-rgb: 104, 113, 133;
   --tag-surface: rgba(104, 113, 133, 0.1);
+  --table-header: #5f75b8;
+  --table-header-text: #ffffff;
+  --table-row: rgba(255, 255, 255, 0.72);
+  --table-row-alt: rgba(95, 117, 184, 0.075);
+  --table-border: rgba(95, 117, 184, 0.24);
 }
 
 [data-theme="dark"] {
@@ -47,6 +52,11 @@ p.text-muted {
   --tag-color: #bec5d3;
   --tag-color-rgb: 190, 197, 211;
   --tag-surface: rgba(190, 197, 211, 0.12);
+  --table-header: #687cb6;
+  --table-header-text: #ffffff;
+  --table-row: rgba(36, 39, 47, 0.86);
+  --table-row-alt: rgba(174, 191, 241, 0.09);
+  --table-border: rgba(174, 191, 241, 0.22);
 }
 
 .navbar .navbar-brand::after,
@@ -179,6 +189,51 @@ a.card::after {
 .search-box:focus {
   border-color: var(--site-accent) !important;
   box-shadow: 0 0 0 0.18rem rgba(var(--site-accent-rgb), 0.16) !important;
+}
+
+/* Use the site palette for every table rendered inside posts and notes. */
+.markdown-body table:not(.highlight) {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--table-border);
+  border-radius: 0.65rem;
+}
+
+.markdown-body table:not(.highlight) th,
+.markdown-body table:not(.highlight) td {
+  border: 0 !important;
+  border-right: 1px solid var(--table-border) !important;
+  border-bottom: 1px solid var(--table-border) !important;
+  padding: 0.75rem 1rem;
+  vertical-align: top;
+}
+
+.markdown-body table:not(.highlight) th:last-child,
+.markdown-body table:not(.highlight) td:last-child {
+  border-right: 0 !important;
+}
+
+.markdown-body table:not(.highlight) tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+.markdown-body table:not(.highlight) th {
+  color: var(--table-header-text) !important;
+  background-color: var(--table-header) !important;
+  font-weight: 600;
+}
+
+.markdown-body table:not(.highlight) td {
+  background-color: var(--table-row) !important;
+}
+
+.markdown-body table:not(.highlight) tbody tr:nth-child(even) td {
+  background-color: var(--table-row-alt) !important;
+}
+
+.markdown-body table:not(.highlight) tbody tr:hover td {
+  background-color: rgba(var(--site-accent-rgb), 0.13) !important;
 }
 
 /* Blog-card previews need a consistent, compact crop; post-body images stay full size. */
