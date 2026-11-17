@@ -29,20 +29,24 @@ p.text-muted {
   --navbar-underline: #5f75b8;
   --site-accent: #5f75b8;
   --site-accent-rgb: 95, 117, 184;
-  --card-heading: #292d35;
+  --card-heading: #414854;
   --card-surface: rgba(255, 255, 255, 0.92);
   --card-footer: rgba(95, 117, 184, 0.055);
-  --tag-surface: rgba(95, 117, 184, 0.11);
+  --tag-color: #687185;
+  --tag-color-rgb: 104, 113, 133;
+  --tag-surface: rgba(104, 113, 133, 0.1);
 }
 
 [data-theme="dark"] {
   --navbar-underline: #aebff1;
   --site-accent: #aebff1;
   --site-accent-rgb: 174, 191, 241;
-  --card-heading: #f2f3f7;
+  --card-heading: #e3e6ed;
   --card-surface: rgba(35, 38, 46, 0.94);
   --card-footer: rgba(174, 191, 241, 0.07);
-  --tag-surface: rgba(174, 191, 241, 0.13);
+  --tag-color: #bec5d3;
+  --tag-color-rgb: 190, 197, 211;
+  --tag-surface: rgba(190, 197, 211, 0.12);
 }
 
 .navbar .navbar-brand::after,
@@ -79,6 +83,14 @@ p.text-muted {
 .card .card-title {
   font-weight: 600;
   letter-spacing: -0.015em;
+}
+
+.card .card-title a:hover {
+  color: var(--card-heading) !important;
+}
+
+.card .card-title a::after {
+  background-color: var(--site-accent) !important;
 }
 
 .card .card-text,
@@ -118,9 +130,9 @@ a.card::after {
 .card .badge-warning,
 .card .badge-dark,
 .card .badge-light {
-  color: var(--site-accent) !important;
+  color: var(--tag-color) !important;
   background-color: var(--tag-surface) !important;
-  border: 1px solid rgba(var(--site-accent-rgb), 0.25) !important;
+  border: 1px solid rgba(var(--tag-color-rgb), 0.24) !important;
   font-weight: 500;
 }
 
