@@ -27,10 +27,14 @@ p.text-muted {
 /* Shared navbar underline: calm blue for the star-themed site. */
 :root {
   --navbar-underline: #5f75b8;
+  --site-accent: #5f75b8;
+  --site-accent-rgb: 95, 117, 184;
 }
 
 [data-theme="dark"] {
   --navbar-underline: #aebff1;
+  --site-accent: #aebff1;
+  --site-accent-rgb: 174, 191, 241;
 }
 
 .navbar .navbar-brand::after,
@@ -45,18 +49,84 @@ p.text-muted {
   width: 100%;
 }
 
-/* Use the same lift-and-shadow interaction for every linked card. */
-.markdown-body a.card {
-  transition: transform 400ms, box-shadow 400ms;
+/* Keep every card calm and visually connected to the navbar accent. */
+.card {
+  color: var(--site-accent) !important;
+  border-color: rgba(var(--site-accent-rgb), 0.42) !important;
+  transition: transform 260ms ease, border-color 260ms ease,
+    box-shadow 260ms ease;
 }
 
-.markdown-body a.card::after {
+.card .card-title,
+.card .card-title a,
+.card .card-text,
+.card .card-footer,
+.card .text-muted,
+.card p,
+.card small,
+.card time {
+  color: var(--site-accent) !important;
+}
+
+.card a:not(.btn) {
+  color: inherit;
+}
+
+.markdown-body a.card::after,
+a.card::after {
   content: none !important;
 }
 
-.markdown-body a.card:hover {
-  transform: translateY(-8px);
-  box-shadow: -2px 8px 40px -12px rgba(0, 0, 0, 0.24);
+.card:hover,
+.card:focus-within {
+  transform: translateY(-5px);
+  border-color: var(--site-accent) !important;
+  box-shadow: 0 14px 30px -18px rgba(var(--site-accent-rgb), 0.58);
+}
+
+/* Buttons share the same accent while staying quiet at rest. */
+.btn-primary,
+.btn-outline-primary {
+  color: var(--site-accent) !important;
+  background-color: transparent !important;
+  border-color: var(--site-accent) !important;
+  box-shadow: none !important;
+  transition: color 200ms ease, background-color 200ms ease,
+    border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+  color: #fff !important;
+  background-color: var(--site-accent) !important;
+  border-color: var(--site-accent) !important;
+  box-shadow: 0 6px 16px -8px rgba(var(--site-accent-rgb), 0.8) !important;
+}
+
+/* Bootstrap primary utilities are used by search buttons and card tags. */
+.input-group .bg-primary,
+.input-group-text.bg-primary,
+.search-box + .input-group-append .bg-primary {
+  color: #fff !important;
+  background-color: var(--site-accent) !important;
+  border-color: var(--site-accent) !important;
+}
+
+.border-primary {
+  border-color: var(--site-accent) !important;
+}
+
+.text-primary {
+  color: var(--site-accent) !important;
+}
+
+.search-box:focus {
+  border-color: var(--site-accent) !important;
+  box-shadow: 0 0 0 0.18rem rgba(var(--site-accent-rgb), 0.16) !important;
 }
 
 /* Blog-card previews need a consistent, compact crop; post-body images stay full size. */
