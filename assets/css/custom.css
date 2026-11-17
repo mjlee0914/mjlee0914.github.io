@@ -29,12 +29,20 @@ p.text-muted {
   --navbar-underline: #5f75b8;
   --site-accent: #5f75b8;
   --site-accent-rgb: 95, 117, 184;
+  --card-heading: #292d35;
+  --card-surface: rgba(255, 255, 255, 0.92);
+  --card-footer: rgba(95, 117, 184, 0.055);
+  --tag-surface: rgba(95, 117, 184, 0.11);
 }
 
 [data-theme="dark"] {
   --navbar-underline: #aebff1;
   --site-accent: #aebff1;
   --site-accent-rgb: 174, 191, 241;
+  --card-heading: #f2f3f7;
+  --card-surface: rgba(35, 38, 46, 0.94);
+  --card-footer: rgba(174, 191, 241, 0.07);
+  --tag-surface: rgba(174, 191, 241, 0.13);
 }
 
 .navbar .navbar-brand::after,
@@ -52,20 +60,36 @@ p.text-muted {
 /* Keep every card calm and visually connected to the navbar accent. */
 .card {
   color: var(--site-accent) !important;
+  background-color: var(--card-surface) !important;
   border-color: rgba(var(--site-accent-rgb), 0.42) !important;
+  border-radius: 1rem;
+  overflow: hidden;
   transition: transform 260ms ease, border-color 260ms ease,
     box-shadow 260ms ease;
 }
 
 .card .card-title,
 .card .card-title a,
-.card .card-text,
 .card .card-footer,
-.card .text-muted,
-.card p,
 .card small,
 .card time {
+  color: var(--card-heading) !important;
+}
+
+.card .card-title {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.card .card-text,
+.card .text-muted,
+.card p {
   color: var(--site-accent) !important;
+}
+
+.card .card-footer {
+  background-color: var(--card-footer) !important;
+  border-top-color: rgba(var(--site-accent-rgb), 0.18) !important;
 }
 
 .card a:not(.btn) {
@@ -82,6 +106,22 @@ a.card::after {
   transform: translateY(-5px);
   border-color: var(--site-accent) !important;
   box-shadow: 0 14px 30px -18px rgba(var(--site-accent-rgb), 0.58);
+}
+
+/* Tags use one low-saturation treatment across Blog, TIL, and Projects. */
+.card .badge,
+.card .badge-primary,
+.card .badge-secondary,
+.card .badge-info,
+.card .badge-success,
+.card .badge-danger,
+.card .badge-warning,
+.card .badge-dark,
+.card .badge-light {
+  color: var(--site-accent) !important;
+  background-color: var(--tag-surface) !important;
+  border: 1px solid rgba(var(--site-accent-rgb), 0.25) !important;
+  font-weight: 500;
 }
 
 /* Buttons share the same accent while staying quiet at rest. */
