@@ -7,3 +7,7 @@ color: primary
 description: 정리 예정
 ---
 
+## 강의 교안
+
+- [LangChain Runnable & LCEL 강의 교안 보기](https://app.notion.com/p/teamsparta/LangChain-Runnable-LCEL-41d2dc3ef51480a5bae2e26ddbafe523)
+
