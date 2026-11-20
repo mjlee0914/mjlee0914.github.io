@@ -4,6 +4,8 @@ title: RAG From Scratch in Python
 permalink: /coding/rag-from-scratch/
 ---
 
+[한국어 버전](/coding/rag-from-scratch/ko/)
+
 ## rag.py
 
 A minimal RAG implementation using Ollama, NumPy, and Python.

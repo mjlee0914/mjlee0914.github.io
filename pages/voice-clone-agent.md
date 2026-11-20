@@ -4,6 +4,8 @@ title: AI Voice Clone Agent in Python
 permalink: /coding/voice-clone-agent/
 ---
 
+[English version](/coding/voice-clone-agent/en/)
+
 ## 무엇을 만들었나
 
 내 목소리를 클론한 AI와 음성으로 대화하는 터미널 앱이다. 흐름은 세 단계다.

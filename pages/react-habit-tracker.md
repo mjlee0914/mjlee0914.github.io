@@ -4,6 +4,8 @@ title: React Habit Tracker Practice
 permalink: /coding/react-habit-tracker/
 ---
 
+[한국어 버전](/coding/react-habit-tracker/ko/)
+
 ## What this project is
 
 This is a weekly habit tracker I made by following [Learn React With This One Project](https://www.youtube.com/watch?v=9aTRnV6g0eQ&t=4138s). It is a practice project for seeing how React components fit together and how state moves through an app. The [source repository](https://github.com/mjlee0914/react-practice-habit-tracker) is private, so its file links require repository access.

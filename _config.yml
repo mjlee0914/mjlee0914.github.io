@@ -23,11 +23,14 @@ nav_exclude:                                            # The following paths ar
   - pages/search.json
   - pages/til-search.json
   - pages/rag-from-scratch.md
+  - pages/rag-from-scratch-ko.md
   - pages/react-habit-tracker.md
+  - pages/react-habit-tracker-ko.md
   - pages/mood-cat.md
   - pages/mood-cat-en.md
   - pages/react-habit-tracker-demo.html
   - pages/voice-clone-agent.md
+  - pages/voice-clone-agent-en.md
   - documentation/partials/**                           # For Documentation Only
 
 
