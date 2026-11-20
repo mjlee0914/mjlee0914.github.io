@@ -5,6 +5,8 @@ permalink: /coding/mood-cat/
 nav_exclude: true
 ---
 
+[English version](/coding/mood-cat/en/)
+
 > “시험 망했어 ㅠㅠ” → 😿 슬픈 고양이 GIF + “괜찮아, 나도 츄르 놓쳤어”
 
 **목표:** 11월 20일 수업 내용인 Runnable, LCEL, `@chain`, `assign`, `retry`와 `fallbacks`를 직접 사용하며 복습한다.
