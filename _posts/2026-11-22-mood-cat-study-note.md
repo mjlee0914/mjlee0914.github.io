@@ -1,5 +1,5 @@
 ---
-title: 261122 TIL - Mood Cat 기능과 화면 구성
+title: "Mood Cat 스터디 노트: 기능과 화면 구성"
 date: 2026-11-22
 tags: [TIL, Python, LangChain, LCEL, FastAPI, JavaScript]
 style: border
