@@ -7,321 +7,146 @@ nav_exclude: true
 
 [한국어 버전](/coding/mood-cat/)
 
-> “I failed my exam 😭” → 😿 a sad cat GIF + “It’s okay. I missed my treat too.”
+## What I Built
 
-**Goal:** Review the November 20 lesson by building with Runnable, LCEL, `@chain`, `assign`, `retry`, and `fallbacks`.
+Mood Cat is a bilingual web app that turns a sentence about how you feel into a mood label, a cat-style caption, and a matching cat GIF.
 
-- This guide does not include the final answer code. It provides directions, hints, and checklists.
-- Complete each checklist before moving on to the next step.
-- When asking for help, explain the step, what you attempted, and the exact error.
+> “I totally bombed my exam :(” → `sad` → a sad cat GIF + a one-line cat caption
+
+[Try the live demo](https://mjlee0914.github.io/mood-cat/) · [View the GitHub repository](https://github.com/mjlee0914/mood-cat)
+
+> The backend runs on Render's free plan, so the first request may take a moment while the server wakes up.
+
+I built this mini project to turn the LangChain Runnable and LCEL concepts from class into a complete application. The intentionally janky interface is inspired by 2007 homepages and Korean school presentation slides.
 
 ---
 
 ## How It Works
 
 ```text
-Input: "I failed my exam 😭"
-   │
-   ▼
-[Mood classification] Free-form text → one mood label ("sad")  ← LLM
-   │
-   ▼
-[Caption generation]  One line in a cat's voice                 ← LLM
-   │
-   ▼
-[GIF search]          Search GIPHY for "sad cat" → one GIF URL  ← API call
-   │
-   ▼
-Output: {text, mood, caption, image_url}
+User's sentence
+      │
+      ▼
+[LLM mood classifier]  free text → one fixed mood label
+      │
+      ▼
+[LLM caption writer]   one line in the user's language
+      │
+      ▼
+[GIPHY search]         "{mood} cat" → one GIF URL
+      │
+      ▼
+{ text, mood, caption, image_url }
 ```
 
-The key idea is to use the LLM only for mood classification and caption generation, while retrieving the GIF from a dedicated API. The LLM chooses a reliable mood label for the GIPHY search instead of generating an image itself.
+The LLM handles the two tasks that need an understanding of language: classifying the sentence and writing the caption. GIPHY supplies the image, which avoids the cost and delay of generating one.
 
-## Image Sources
+The frontend sends a `POST /mood` request to the FastAPI server. The server runs the LCEL chain and returns a typed response containing the original text, mood, caption, and GIF URL.
 
-```text
-Python practice (steps 0–5) → GIPHY   (API key stored in .env)  ← varied meme GIFs
-Blog demo (step 6)          → CATAAS  (no API key required)    ← safe in a browser
-                              ↳ also the fallback when GIPHY fails in step 4
-```
+## The LCEL Pipeline
 
-### GIPHY: Main GIF Source for Python
-
-- Search for memes with queries such as `"sad cat"`, `"sleepy cat"`, and `"hangry cat"`.
-- A free API key is required. A request without a key returns `401 Unauthorized`.
-- The search endpoint is `https://api.giphy.com/v1/gifs/search`.
-
-| Item | Value |
-| --- | --- |
-| Main parameters | `api_key`, `q`, `limit`, `rating` |
-| Recommended rating | `g` |
-| Response | GIF data inside the JSON `data` list |
-
-When creating a key, read the request limits and attribution requirements on [GIPHY Developers](https://developers.giphy.com).
-
-### CATAAS: Fallback and Browser Demo
-
-[CATAAS (Cat as a Service)](https://cataas.com) does not require an API key.
-
-| URL | Result |
-| --- | --- |
-| `https://cataas.com/cat/happy` | A random cat tagged `happy` |
-| `https://cataas.com/cat/sad/says/hi` | A cat image with `hi` overlaid |
-| `https://cataas.com/cat/happy?json=true` | Image information as JSON |
-| `https://cataas.com/api/tags` | All available tags |
-
-Verified mood tags:
-
-`happy` `sad` `angry` `sleepy` `tired` `bored` `scared` `excited` `confused` `hungry` `love` `cute` `grumpy`
-
-Choose only five to seven labels for the app. Too many labels can make classification ambiguous.
-
-> Free external services can become slow or unavailable, so step 4 adds fallbacks. User-created tags may not match an image perfectly. Korean text after `/says/` may also render incorrectly, so display the caption outside the image when necessary.
-
-## Roadmap
-
-| Step | Build | Concepts | Time |
-| --- | --- | --- | --- |
-| 0 | Prepare the environment and get a GIPHY key | venv, `.env` | 15 min |
-| 1 | Keyword mood classifier without an LLM | `@chain`, `invoke`, `batch` | 20 min |
-| 2 | LLM mood classifier | `prompt \| llm \| parser` | 30 min |
-| 3 | Combine the mood, caption, and GIPHY GIF | `RunnablePassthrough.assign()`, `requests` | 40 min |
-| 4 | Add LLM and GIPHY fallbacks | `.with_retry()`, `.with_fallbacks()` | 25 min |
-| 5 (optional) | Stream the caption | `.stream()` | 15 min |
-| 6 (optional) | Embed a browser demo in the blog | HTML, JavaScript, Jekyll | 40 min |
-| 7 | Write a TIL | Review and reflection | 20 min |
-
-## Step 0: Prepare the Environment
-
-### Tasks
-
-- [ ] Work inside `12_rag/side_cat/`.
-- [ ] Use the existing `ax_study/.venv` environment.
-- [ ] Confirm that VS Code uses `.venv` as its Python interpreter.
-- [ ] Load the OpenAI API key from `12_rag/.env` with `load_dotenv()`.
-- [ ] Create an API app at [GIPHY Developers](https://developers.giphy.com) and get a key.
-- [ ] Add `GIPHY_API_KEY=your-key` to `12_rag/.env`.
-- [ ] Confirm that `requests` is installed in `.venv`.
-- [ ] Open `https://cataas.com/cat/happy` to test the fallback image service.
-
-### Hints and Checks
-
-- Run `which python` and verify that the path contains `.venv`.
-- `load_dotenv()` searches from the current file's directory toward its parents. Test this behavior because notebooks may behave differently.
-- [ ] `import langchain_core` runs without an error.
-- [ ] Both `OPENAI_API_KEY` and `GIPHY_API_KEY` are not `None`.
-- [ ] A basic GIPHY request made with `requests.get(..., params={...})` returns status `200`.
-
-> Never print API key values. Keep `.env` in `.gitignore`, never commit it, and never paste a key into source code.
-
-## Step 1: Keyword Mood Classifier
-
-File: `step1_keyword.py`
-
-### Target Behavior
-
-```text
-invoke("happy")                         → "happy"
-invoke("I'm so sleepy")                 → "sleepy"
-invoke("asdfgh")                        → "confused"
-batch(["happy", "hungry", "angry"])   → ["happy", "hungry", "angry"]
-```
-
-### Decide Before Coding
-
-- [ ] Choose five to seven mood labels.
-- [ ] Define Korean and English keywords for each label.
-- [ ] Choose a default label when nothing matches.
-- [ ] Define a priority rule when multiple keywords match.
-
-### Hint
-
-```text
-Create a dict: label → list of keywords
-Function decorated with @chain
-  └─ convert the input to lowercase
-  └─ loop through labels and check for matching keywords
-  └─ return the matching label, or the default at the end
-```
-
-### Checklist
-
-- [ ] `invoke()` works.
-- [ ] `batch()` works even though you did not implement it yourself.
-- [ ] You can explain why a phrase such as “I failed my exam” may defeat the keyword classifier and motivate step 2.
-
-## Step 2: LLM Mood Classifier
-
-File: `step2_llm_mood.py`
-
-### Target Behavior
-
-```text
-invoke({"text": "I failed my exam 😭"})       → "sad"
-invoke({"text": "It's finally Friday!!"})    → "excited"
-invoke({"text": "This meeting is endless"}) → "tired"
-```
-
-The result must be one of the labels chosen in step 1.
-
-### Hints
-
-Build three blocks:
-
-1. `ChatPromptTemplate.from_messages([...])`
-   - System: return exactly one lowercase label.
-   - Human: `{text}`
-2. `ChatOpenAI(model=...)`
-   - Use the model from class and prefer `temperature=0` for classification.
-3. `StrOutputParser()`
-
-Connect the blocks with `|`. The `{text}` prompt variable must match the key passed to `invoke()`.
-
-### Experiments and Checks
-
-- [ ] Add a cleanup stage for values such as `"Sad."`.
-- [ ] Replace results outside the allowed labels with a default.
-- [ ] Explore `with_structured_output()` and `Literal` to constrain the output.
-- [ ] Let the LLM create a GIPHY query directly and compare its humor and reliability with fixed labels.
-- [ ] Test five inputs with `batch()`.
-- [ ] Explain the role of every component in `A | B | C`.
-
-## Step 3: Combine Mood, Caption, and GIPHY GIF
-
-File: `step3_assign.py`
-
-### Target Output
+The main chain starts with `{"text": "..."}` and uses `RunnablePassthrough.assign()` to add one value at a time without losing earlier data.
 
 ```python
-{
-    "text": "I failed my exam 😭",
-    "mood": "sad",
-    "caption": "It's okay. I missed my treat too.",
-    "image_url": "https://media.giphy.com/media/...",
-}
+mood_cat_chain = (
+    RunnablePassthrough.assign(mood=mood_step)
+    | RunnablePassthrough.assign(caption=caption_step)
+    | RunnablePassthrough.assign(image_url=giphy_step)
+)
 ```
 
-### Hints
+This was the key reason to use `assign()`: the caption stage needs both `text` and `mood`, while the final response still needs every value created earlier in the pipeline.
 
-- Start with a dict: `{"text": "..."}`.
-- Add the mood with `RunnablePassthrough.assign(mood=step_2_chain)`.
-- Add the caption with another `assign()`, using both `{text}` and `{mood}` in its prompt.
-- Add a GIPHY search function decorated with `@chain` as the final `assign()` stage. An ordinary function can become a Runnable and join the chain.
-- Build `f"{mood} cat"`, call the API with `requests.get()`, choose an item from `data`, and return a URL from its `images` object.
-- Pretty-print one response with `json.dumps(..., indent=2)` to inspect its structure.
-- Request 10–25 results and use `random.choice()` to vary the GIF.
+The classifier uses a fixed label set shared with the keyword fallback:
 
-### Experiments and Checks
+`go_home` · `poop` · `hungry` · `sleepy` · `angry` · `sad` · `anxious` · `hurt` · `embarrassed` · `happy` · `neutral`
 
-- [ ] Replace `assign()` with a plain `|` and observe how losing `text` can cause a `KeyError`.
-- [ ] The result contains `text`, `mood`, `caption`, and `image_url`.
-- [ ] The URL opens a cat GIF appropriate for the mood.
-- [ ] The same text produces different GIFs across three runs.
-- [ ] The complete chain works with three sentences through `batch()`.
+The LLM must return exactly one label. Any value outside the allowed list becomes `neutral`, keeping the following GIPHY query predictable.
 
-## Step 4: Always Return a Cat
+## Resilience: Always Return a Cat
 
-File: `step4_resilience.py`
+Each external step is wrapped with retry and fallback behavior, so a temporary API failure does not immediately break the entire experience.
 
-| Failure | Retry | Fallback after retries fail |
+| Step | Retry | Fallback |
 | --- | --- | --- |
-| LLM mood classification | 3 times | Step 1 keyword classifier |
-| LLM caption generation | 3 times | `...meow? (The server is napping.)` |
-| GIPHY search | 3 times | `https://cataas.com/cat/{mood}` |
+| Mood classification | Up to 3 attempts | Local Korean keyword classifier |
+| Caption generation | Up to 3 attempts | `서버가 낮잠중이다냥` |
+| GIPHY search | Up to 3 attempts | A fixed cat GIF |
 
-This reuses the simple classifier from step 1 instead of throwing it away. It follows a practical pattern: try the smarter method first, then fall back to a simpler and more reliable method.
+The fallback classifier is deliberately simpler than the LLM. It cannot understand every sentence or handle all negations, but it has no API dependency and can still return a useful label when the smarter method is unavailable.
 
-### Hints
+## Frontend Experience
 
-- Simulate failures with a nonexistent model, an invalid GIPHY key, or a `RunnableLambda` that always raises `ConnectionError`.
-- `requests` does not raise an exception for `401` or `500` responses automatically. Call `response.raise_for_status()` so retry and fallback can detect the failure.
-- Decide whether an empty `data` list counts as failure.
-- Add `timeout=5` to avoid waiting forever.
-- Use `chain.with_retry(stop_after_attempt=3).with_fallbacks([fallback_chain])`.
-- Match input shapes: the LLM chain receives a dict while the keyword classifier receives a string. Adapt the input with a stage such as `RunnableLambda(lambda d: d["text"])`.
+The frontend is built with plain HTML, CSS, and JavaScript. It includes:
 
-### Checklist
+- English and Korean modes, initially selected from the browser language
+- an intentionally annoying escape button, fake button, cookie dialogs, and nagging timer
+- a mouse rainbow trail, click explosions, and typewriter captions
+- generated “meow,” “boom,” and 8-bit background music using the Web Audio API
+- a reduced-motion mode for users who disable animations in their system settings
 
-- [ ] The failing function is called exactly three times.
-- [ ] Simple inputs still work through the keyword classifier when the LLM fails.
-- [ ] An invalid GIPHY key still produces a CATAAS cat.
-- [ ] You can predict and test what changes when retry and fallback are reversed.
+No audio files are shipped with the site. The effects and music are synthesized in the browser.
 
-## Step 5 (Optional): Stream the Caption
+## Tech Stack
 
-Use `stream()` on the caption chain.
+| Part | Technology |
+| --- | --- |
+| AI pipeline | Python, LangChain Core, LangChain OpenAI, LCEL |
+| Backend | FastAPI, Pydantic, Uvicorn |
+| GIF search | GIPHY API |
+| Frontend | HTML, CSS, JavaScript, GSAP, Web Audio API |
+| Deployment | Render for the API, GitHub Pages for the frontend |
 
-```python
-for chunk in caption_chain.stream({...}):
-    print(chunk, end="", flush=True)
+API keys remain on the backend in environment variables. The browser never receives the OpenAI or GIPHY key, and FastAPI CORS only allows the local development URLs and the deployed GitHub Pages origin.
+
+## Deployment Architecture
+
+```text
+GitHub Pages frontend
+        │  POST /mood
+        ▼
+Render FastAPI backend
+        ├── OpenAI API: mood + caption
+        └── GIPHY API: matching cat GIF
 ```
 
-- [ ] The caption appears as if it is being typed.
-- [ ] Compare streaming a string chain with streaming the complete dict chain.
+- Pushing frontend changes to `main` runs a GitHub Actions workflow that deploys only the `frontend/` directory.
+- `render.yaml` defines the backend build command, start command, health check, and required environment variables.
+- `GET /health` provides a lightweight deployment health check.
 
-## Step 6 (Optional): Publish a Browser Demo
+## What I Learned
 
-GitHub Pages cannot run Python. Rebuild the step 1 keyword classifier in JavaScript and use CATAAS because it does not require a key.
+- **LCEL became clearer after building a real data flow.** The pipe syntax is not only shorter code; it makes the input and output shape of every stage important.
+- **`assign()` preserves context.** Replacing the whole value at each stage would lose fields needed by later prompts and by the API response.
+- **Fallbacks should have fewer dependencies.** A local keyword classifier is less capable than an LLM but remains available when the network or model fails.
+- **Secrets belong on the server.** Moving the LangChain pipeline behind FastAPI made it possible to publish the frontend without exposing API keys.
+- **Deployment is part of the application.** CORS, cold starts, health checks, and separate frontend/backend URLs all affected the final user experience.
 
-> Never put an OpenAI or GIPHY API key in browser JavaScript. Anyone can read it through developer tools.
+## Run It Locally
 
-### Tasks
-
-- [ ] Create `assets/demos/mood-cat/index.html` without Jekyll front matter.
-- [ ] Build the input, button, image, and caption in one HTML/CSS/JavaScript file.
-- [ ] Translate the Python keyword logic into JavaScript.
-- [ ] Append `?t=${Date.now()}` to the image URL to avoid browser caching.
-- [ ] Support dark mode with `@media (prefers-color-scheme: dark)`.
-- [ ] Embed the demo in the study page.
-
-```html
-<iframe src="/assets/demos/mood-cat/index.html"
-        width="100%" height="520"
-        style="border: 0; border-radius: 8px;"
-        loading="lazy"
-        title="Mood Cat"></iframe>
+```bash
+git clone https://github.com/mjlee0914/mood-cat.git
+cd mood-cat
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-For a future hosted LLM and GIPHY version, consider:
+Add `OPENAI_API_KEY` and `GIPHY_API_KEY` to `.env`, then run the backend and frontend in separate terminals:
 
-| Option | Notes |
-| --- | --- |
-| Hugging Face Spaces + Gradio | Free plan and simple setup |
-| Streamlit Community Cloud | Useful for a Streamlit UI |
-| FastAPI + Render/AWS | Useful for backend deployment practice |
+```bash
+# Terminal 1
+uvicorn api:app --reload
 
-Replace the iframe URL after deployment and always configure an API spending limit.
+# Terminal 2
+python -m http.server 5500 --directory frontend
+```
 
-## Step 7: Write a TIL
+Open `http://localhost:5500`. The FastAPI documentation is available at `http://127.0.0.1:8000/docs`.
 
-- [ ] Write one new lesson from each step.
-- [ ] Compare the keyword and LLM classifiers and explain why the LLM helps.
-- [ ] Record the hardest error and the solution, including the original error message.
-- [ ] Explain `A | B | C` and why `assign()` is necessary in your own words.
-- [ ] Answer: “Why use Runnable?”
-- [ ] Add the demo iframe if you completed step 6.
+## Links
 
-## Troubleshooting
-
-| Symptom | Check |
-| --- | --- |
-| `ModuleNotFoundError` | Confirm that the interpreter is `.venv` |
-| API key error | Check `load_dotenv()` and the `.env` location |
-| `KeyError` or missing variables | Match prompt variables and `invoke` keys; make sure a key was not lost without `assign()` |
-| LLM returns a sentence instead of a label | Emphasize “one label only” and use `temperature=0` |
-| Result is `AIMessage(...)` | Add `StrOutputParser` |
-| Fallback type error | Match the dict input and string input shapes |
-| GIPHY `401` or `403` | Check the `GIPHY_API_KEY` name, `.env`, and surrounding whitespace |
-| Status `200` but no GIF | Check for an empty `data` list and simplify the query |
-| `KeyError: 'images'` | Inspect the JSON structure and list/dict access |
-| Retry does not detect a GIPHY failure | Call `raise_for_status()` |
-| Cat image does not load | Open the URL directly and check the tag spelling |
-| Image does not change in the blog | Add `?t=Date.now()` to avoid caching |
-| Empty iframe | Check the `/assets/...` path and test with local Jekyll |
-
-## References
-
+- [Live demo](https://mjlee0914.github.io/mood-cat/)
+- [GitHub repository](https://github.com/mjlee0914/mood-cat)
 - [November 20 study notes](https://github.com/mjlee0914/ax_study/blob/main/12_rag/1120_note.md)
 - [LangChain Runnable practice notebook](https://github.com/mjlee0914/ax_study/blob/main/12_rag/langchain-runnable/lecture.ipynb)
-- [GIPHY Developers](https://developers.giphy.com)
-- [CATAAS](https://cataas.com)
