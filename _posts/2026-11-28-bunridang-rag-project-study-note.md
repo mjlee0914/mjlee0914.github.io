@@ -1,6 +1,6 @@
 ---
 title: "분리당 RAG 프로젝트 학습 노트: 근거를 찾고, 모르면 모른다고 답하기"
-date: 2026-11-28
+date: 2026-11-28 08:00:00 +0900
 tags: [RAG, LangChain, OpenAI, BM25, Reranking, Langfuse, Ragas, Streamlit, Python, Team Project]
 style: border
 color: primary
